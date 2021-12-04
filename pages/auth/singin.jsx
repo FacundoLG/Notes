@@ -7,8 +7,17 @@ const Singin = () => {
   const [password, setPassword] = useState("");
   const handleLogin = (e) => {
     e.preventDefault();
-
     console.log({ username, password });
+    const userData = { username, password };
+    fetch("/api/singin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userData }),
+    })
+      .then((data) => data.json())
+      .then(console.log);
     setUsername("");
     setPassword("");
   };
@@ -37,7 +46,7 @@ const Singin = () => {
         </div>
         <div className={styles.formOptions}>
           <div>
-            <button className={styles.checkButton} />
+            <input type="button" className={styles.checkButton} />
             <p className={styles.formOptionsText}>Remember me</p>
           </div>
           <div>

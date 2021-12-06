@@ -7,8 +7,7 @@ const TextTools = ({ currentTool }) => {
         currentTool(e.target.id);
       }
     };
-    console.log(document.querySelector("li"));
-    document.querySelectorAll("li").forEach((element) => {
+    document.querySelectorAll("button").forEach((element) => {
       element.addEventListener("click", (e) => {
         toolSelector(e);
       });
@@ -19,28 +18,28 @@ const TextTools = ({ currentTool }) => {
   return (
     <div className={styles.toolsContainer}>
       <ul className={styles.toolsList}>
-        <li id="T1">
+        <button id="T1">
           T<span>1</span>
-        </li>
-        <li id="T2">
+        </button>
+        <button id="T2">
           T<span>2</span>
-        </li>
-        <li id="T3">
+        </button>
+        <button id="T3">
           T<span>3</span>
-        </li>
-        <li id="P">P</li>
-        <li id="B" style={{ fontWeight: "800" }}>
+        </button>
+        <button id="P">P</button>
+        <button id="B" style={{ fontWeight: "800" }}>
           B
-        </li>
-        <li id="U" style={{ textDecoration: "underline" }}>
+        </button>
+        <button id="U" style={{ textDecoration: "underline" }}>
           U
-        </li>
-        <li id="T" style={{ textDecoration: "line-through" }}>
-          T
-        </li>
-        <li id="A" style={{ color: "var(--contrast-color)" }}>
+        </button>
+        <button id="L" style={{ textDecoration: "line-through" }}>
+          L
+        </button>
+        <button id="A" style={{ color: "var(--contrast-color)" }}>
           A
-        </li>
+        </button>
       </ul>
     </div>
   );

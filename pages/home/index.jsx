@@ -32,13 +32,8 @@ const Home = () => {
             />
           ))}
         </div>
-        <div style={{ display: "flex", width: "100%" }}>
-          <TextContainer activeTool={setActiveId} />
-          <TextTools
-            currentTool={(toolId) => {
-              setActiveTool(toolId);
-            }}
-          />
+        <div style={{ display: "flex", width: "70vw" }}>
+          <TextContainer activeTool={activeTool} />
         </div>
       </main>
     </>

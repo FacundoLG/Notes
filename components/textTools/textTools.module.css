@@ -1,5 +1,6 @@
 .toolsContainer {
   display: flex;
+  justify-content: center;
   height: 65%;
   background: var(--secondary-color);
   border-radius: 10px 0 0 10px;
@@ -7,19 +8,29 @@
 }
 .toolsList {
   display: flex;
+  text-align: center;
   flex-direction: column;
   justify-content: space-between;
-  text-align: center;
   font-weight: 600;
   list-style-type: none;
-  padding: 12px;
   margin: 0;
+  padding: 2px;
 }
-.toolsList li:hover {
+.toolsList button {
+  background: none;
+  border: none;
+  color: var(--font-color);
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.toolsList button:hover {
   cursor: pointer;
   filter: brightness(1.5);
   transition: 150ms;
+  background-color: var(--white-opacity);
 }
-.toolsList li span {
+.toolsList button span {
   font-size: 80%;
 }

@@ -1,0 +1,25 @@
+.toolsContainer {
+  display: flex;
+  height: 65%;
+  background: var(--secondary-color);
+  border-radius: 10px 0 0 10px;
+  margin: auto 0 auto auto;
+}
+.toolsList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  font-weight: 600;
+  list-style-type: none;
+  padding: 12px;
+  margin: 0;
+}
+.toolsList li:hover {
+  cursor: pointer;
+  filter: brightness(1.5);
+  transition: 150ms;
+}
+.toolsList li span {
+  font-size: 80%;
+}

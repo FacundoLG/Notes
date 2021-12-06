@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import NoteCard from "../../components/noteCard/NoteCard";
+import TextContainer from "../../components/TextContainer/TextContainer";
+import TextTools from "../../components/textTools/TextTools";
 import styles from "../../styles/Home.module.css";
 const Home = () => {
-  const [activeId, setActiveId] = useState(1);
   const notes = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
-  const handleActiveCard = () => {};
+  //NotesStates
+  const [activeId, setActiveId] = useState(1);
+  //Text States
+  const [activeTool, setActiveTool] = useState("P");
+
   return (
     <>
       <header className={styles.header}>
@@ -27,7 +32,14 @@ const Home = () => {
             />
           ))}
         </div>
-        <div></div>
+        <div style={{ display: "flex", width: "100%" }}>
+          <TextContainer activeTool={setActiveId} />
+          <TextTools
+            currentTool={(toolId) => {
+              setActiveTool(toolId);
+            }}
+          />
+        </div>
       </main>
     </>
   );

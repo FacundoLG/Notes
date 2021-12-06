@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./noteCard.module.css";
 import { HiDotsVertical, HiXCircle } from "react-icons/hi";
-const NoteCard = ({ noteData, deactivate, setActive, isActive }) => {
+const NoteCard = ({ noteData, setActive, isActive }) => {
   const [noteTitle, setNoteTitle] = useState(noteData?.title || "Note title");
   const [toolTip, setToolTip] = useState(false);
 
@@ -29,7 +29,9 @@ const NoteCard = ({ noteData, deactivate, setActive, isActive }) => {
         <HiDotsVertical
           id="toolTipButton"
           className={styles.dotsIcon}
-          onClick={(e) => setToolTip(!toolTip)}
+          onClick={(e) => {
+            setToolTip(!toolTip);
+          }}
         />
         {toolTip && (
           <div id="tooltip" className={styles.cardToolTip}>

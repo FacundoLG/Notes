@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import TextTools from "../textTools/TextTools";
 import styles from "./textContainer.module.css";
 const TextContainer = () => {
-  const [tool, setTool] = useState("P");
+  const [tool, setTool] = useState({ name: "P", refresh: true });
   useEffect(() => {
-    switch (tool) {
+    switch (tool.name) {
       case "B":
         document.execCommand("bold");
         break;
@@ -14,6 +14,11 @@ const TextContainer = () => {
       case "U":
         document.execCommand("underline");
         break;
+      case "L":
+        document.execCommand("strikeThrough");
+        break;
+      default:
+        document.execCommand("normal");
     }
   }, [tool]);
 
@@ -26,7 +31,7 @@ const TextContainer = () => {
       ></div>
       <TextTools
         currentTool={(toolid) => {
-          setTool(toolid);
+          setTool({ name: toolid, refresh: tool.refresh });
           document.querySelector("#editable").focus();
         }}
       />

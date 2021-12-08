@@ -18,15 +18,9 @@ const TextTools = ({ currentTool }) => {
   return (
     <div className={styles.toolsContainer}>
       <ul className={styles.toolsList}>
-        <button id="T1">
-          T<span>1</span>
-        </button>
-        <button id="T2">
-          T<span>2</span>
-        </button>
-        <button id="T3">
-          T<span>3</span>
-        </button>
+        <button id="T1">T1</button>
+        <button id="T2">T2</button>
+        <button id="T3">T3</button>
         <button id="P">P</button>
         <button id="B" style={{ fontWeight: "800" }}>
           B

@@ -1,6 +1,6 @@
 .TextContainer {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   height: 100%;
   width: 100%;
   padding: 0 0 0 10px;
@@ -14,4 +14,12 @@
   margin: auto;
   overflow-wrap: break-word;
   outline: none;
+}
+@media (max-width: 580px) {
+  .TextContainer {
+    width: 100vw;
+  }
+  .EditableContent {
+    width: 100vw;
+  }
 }

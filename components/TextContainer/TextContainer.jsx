@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import TextTools from "../textTools/TextTools";
+import TextTools from "../TextTools/TextTools";
 import styles from "./textContainer.module.css";
 const TextContainer = () => {
   const [tool, setTool] = useState({ name: "P", refresh: true });

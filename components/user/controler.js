@@ -17,4 +17,7 @@ module.exports = {
       reject({ message: "Token invalid or expired", data: null });
     });
   },
+  editUserInformation: (newInformation) => {
+    return new Promise((resolve, reject) => {});
+  },
 };

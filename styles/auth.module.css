@@ -10,7 +10,7 @@
   padding: 30px;
   width: 95vw;
   min-width: 320px;
-  max-width: 450px;
+  max-width: 400px;
   flex-direction: column;
   background-color: var(--secondary-color);
   border-radius: 5px;
@@ -22,18 +22,18 @@
 }
 .inputsContainer > label {
   color: var(--contrast-color);
-  margin: 0px 0px 8px 0px;
-  font-size: 18px;
+  margin: 0px 0px 6px 0px;
+  font-size: 15px;
 }
 .inputsContainer > label:hover {
   cursor: pointer;
 }
 .inputsContainer > input {
-  margin: 0 0 20px 0;
+  margin: 0 0 15px 0;
   background: var(--white-opacity);
   border: none;
   border-radius: 50px;
-  font-size: 20px;
+  font-size: 16px;
   outline: none;
   padding: 4px 14px;
   color: var(--font-color);
@@ -41,6 +41,7 @@
 .formOptions {
   display: flex;
   justify-content: space-between;
+  margin: 5px 0;
   color: white;
 }
 
@@ -49,8 +50,14 @@
   align-items: center;
 }
 .formOptionsText {
+  margin: 0;
   font-size: 13px;
 }
+.formOptionsText > div {
+  display: flex;
+  align-items: center;
+}
+
 .link {
   color: #12dbf6;
   text-decoration: underline;
@@ -60,7 +67,7 @@
 }
 .checkButton {
   width: 15px;
-  aspect-ratio: 1;
+  height: 15px;
   padding: 0;
   margin: 0 12px 0 0;
   border-radius: 50%;
@@ -68,11 +75,11 @@
 }
 .actionButton {
   background: var(--contrast-color);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: bold;
-  padding: 9px;
+  padding: 7px;
   margin: 10px 0 0 0;
-  width: 150px;
+  width: 130px;
   border: none;
   color: var(--font-color);
   border-radius: 10px;

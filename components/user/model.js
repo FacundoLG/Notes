@@ -12,10 +12,6 @@ const UserSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
-  password: {
-    required: true,
-    type: String,
-  },
   creationTime: {
     required: true,
     type: Date,
@@ -28,8 +24,12 @@ const UserSchema = new mongoose.Schema({
     required: false,
     type: String,
   },
+  theme: {
+    type: String,
+    default: "DarkOrange",
+  },
 });
 
 const User = mongoose.model("User", UserSchema);
 
-export default User;
+module.exports = User;

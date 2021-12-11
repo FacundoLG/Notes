@@ -8,7 +8,12 @@ const Singup = () => {
   const [confirmationPassword, setConfirmationPassword] = useState("");
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log({ username, email, password, confirmationPassword });
+    const userData = { username, email, password };
+    console.log(userData);
+    fetch("http://localhost:3000/api/singup", {
+      method: "POST",
+      body: JSON.stringify({ userData }),
+    });
     setUsername("");
     setEmail("");
     setPassword("");

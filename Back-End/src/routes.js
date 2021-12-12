@@ -1,5 +1,6 @@
+import usersRoute from "./components/user/network.js";
 const routes = (app) => {
-  // app.use("/auth")
+  app.use("/user", usersRoute);
 };
 
 export default routes;

@@ -1,7 +1,7 @@
-const bcrypt = require("bcrypt");
+import bcrypt from "bcryptjs";
 const saltRounds = 10;
 
-const hashPasword = (password) => {
+export const hashPasword = (password) => {
   return new Promise((resolve, reject) => {
     bcrypt
       .hash(password, saltRounds)
@@ -12,7 +12,7 @@ const hashPasword = (password) => {
   });
 };
 
-const comparePassword = (password, hashedPassword) => {
+export const comparePassword = (password, hashedPassword) => {
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, hashedPassword).then((result) => {
       if (result) {
@@ -23,5 +23,3 @@ const comparePassword = (password, hashedPassword) => {
     });
   });
 };
-
-module.exports = { hashPasword, comparePassword };

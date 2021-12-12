@@ -1,9 +1,10 @@
 import express from "express";
-import { SingUpUser, SingInUser } from "./controler";
-import { success, error } from "../../utils/response";
+import { SingUpUser, SingInUser } from "./controler.js";
+import { success, error } from "../../utils/response.js";
 const router = express.Router();
 
 router.post("/singup", (req, res) => {
+  console.log(req.body);
   SingUpUser(req.body)
     .then((result) => {
       success(req, res, 200, result.message);

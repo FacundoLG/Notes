@@ -1,9 +1,11 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 const URI = process.env.URI;
 const dbConnection = async () => {
   if (!URI)
     return console.log(
-      "[DB Connection] URI is undefined please set it on .env.local file"
+      "[DB Connection] URI is undefined please set it on .env"
     );
   await mongoose
     .connect(URI)
@@ -15,4 +17,4 @@ const dbConnection = async () => {
     });
 };
 
-module.exports = dbConnection;
+export default dbConnection;

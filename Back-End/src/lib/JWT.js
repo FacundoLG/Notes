@@ -1,6 +1,6 @@
-import response from "../utils/response";
+import response from "../utils/response.js";
 
-var jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 const key = "SARAKATUNGA";
 
 //Promise

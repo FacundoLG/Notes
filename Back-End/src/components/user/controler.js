@@ -1,7 +1,7 @@
-const bcryptLib = require("../../lib/bcrypt");
-const userStore = require("./store");
-module.exports = {
-  SingUpUser: (userInformation) => {
+import bcryptLib from "../../lib/bcrypt"
+import userStore from "./store"
+
+export const SingUpUser = (userInformation) => {
     return new Promise((resolve, reject) => {
       //DB's funtion that verify if the email or username is used
       //bcrypt funtion that hash the password
@@ -18,8 +18,9 @@ module.exports = {
           });
       });
     });
-  },
-  SingInUser: (userInformation) => {
+  }
+
+export const SingInUser= (userInformation) => {
     return new Promise((resolve, reject) => {
       //DB's funtion that verify if the user exist
       //bcrypt funtion that validate password and autenticates the user
@@ -29,4 +30,3 @@ module.exports = {
       reject({ message: "Token invalid or expired", data: null });
     });
   },
-};

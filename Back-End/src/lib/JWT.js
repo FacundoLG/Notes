@@ -8,6 +8,7 @@ export const generateToken = (data) => {
   return new Promise(async (resolve, reject) => {
     jwt.sign(data, key, { expiresIn: "1h" }, (err, tkn) => {
       if (err) {
+        console.log("[JWT Error]" + err);
         reject({ message: "Internal Error", data: null });
       } else if (tkn) {
         resolve({ message: "", data: tkn });

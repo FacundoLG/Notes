@@ -21,11 +21,32 @@ export const addNewUser = (userData) => {
     });
   });
 };
-export const getOneUser = (userParam) => {
+
+export const getUserByEmail = (email) => {
   return new Promise((resolve, reject) => {
-    UserModel.findOne(userParam)
+    User.findOne({ email: email })
       .then((result) => {
-        resolve({ message: "User finded", data: result });
+        if (result) {
+          resolve({ message: "User found", data: result });
+        } else {
+          reject({ message: "User not found", data: err });
+        }
+      })
+      .catch((err) => {
+        reject({ message: "User not found", data: err });
+      });
+  });
+};
+
+export const getUserByUsername = (username) => {
+  return new Promise((resolve, reject) => {
+    User.findOne({ username: username })
+      .then((result) => {
+        if (result) {
+          resolve({ message: "User found", data: result });
+        } else {
+          reject({ message: "User not found", data: err });
+        }
       })
       .catch((err) => {
         reject({ message: "User not found", data: err });

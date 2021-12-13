@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
-const saltRounds = 10;
+const saltRounds = bcrypt.genSaltSync(10);
 
-export const hashPasword = (password) => {
+export const hashPassword = (password) => {
   return new Promise((resolve, reject) => {
     bcrypt
       .hash(password, saltRounds)
@@ -18,7 +18,7 @@ export const comparePassword = (password, hashedPassword) => {
       if (result) {
         resolve({ message: "Password validated" });
       } else {
-        resolve({ message: err });
+        reject({ message: "Icorrect password or username :(" });
       }
     });
   });

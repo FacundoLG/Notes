@@ -1,6 +1,6 @@
-import { hashPasword, comparePassword } from "../../lib/bcrypt.js";
-import { addNewUser, getOneUser } from "./store.js";
-
+import { hashPassword, comparePassword } from "../../lib/bcrypt.js";
+import { addNewUser, getUserByUsername, getUserByEmail } from "./store.js";
+import { generateToken } from "../../lib/JWT.js";
 export const SingUpUser = (userInformation) => {
   return new Promise((resolve, reject) => {
     //DB's funtion that verify if the email or username is used
@@ -22,11 +22,33 @@ export const SingUpUser = (userInformation) => {
 
 export const SingInUser = (userInformation) => {
   return new Promise((resolve, reject) => {
-    //DB's funtion that verify if the user exist
-    //bcrypt funtion that validate password and autenticates the user
-    comparePassword(userInformation.password, hashedPassord);
-    //JWT funtion that give a token for futures autorization
-    resolve({ message: "Token validated", data: "Token" });
-    reject({ message: "Token invalid or expired", data: null });
+    //DB's funtion that verify if the user exist and return the hashed password
+    getUserByUsername(userInformation.username)
+      .then((result) => {
+        const User = result.data;
+        const hashedPassword = User.password;
+        //bcrypt funtion that validate password and autenticates the user
+        comparePassword(userInformation.password, hashedPassword)
+          .then((result) => {
+            //JWT funtion that give a token for futures autorization
+            console.log(result);
+            generateToken({
+              _id: User._id,
+              username: User.username,
+            })
+              .then((result) => {
+                resolve(result);
+              })
+              .catch((result) => {
+                reject(result);
+              });
+          })
+          .catch((result) => {
+            reject(result);
+          });
+      })
+      .catch((result) => {
+        reject(result);
+      });
   });
 };

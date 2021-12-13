@@ -26,14 +26,11 @@ export const getUserByEmail = (email) => {
   return new Promise((resolve, reject) => {
     User.findOne({ email: email })
       .then((result) => {
-        if (result) {
-          resolve({ message: "User found", data: result });
-        } else {
-          reject({ message: "User not found", data: err });
-        }
+        if (!result) reject({ message: "User not found" });
+        else resolve({ message: "User found", data: result });
       })
       .catch((err) => {
-        reject({ message: "User not found", data: err });
+        reject({ message: "User not found" });
       });
   });
 };
@@ -42,14 +39,31 @@ export const getUserByUsername = (username) => {
   return new Promise((resolve, reject) => {
     User.findOne({ username: username })
       .then((result) => {
-        if (result) {
-          resolve({ message: "User found", data: result });
-        } else {
-          reject({ message: "User not found", data: err });
-        }
+        if (!result) reject({ message: "User not found" });
+        else resolve({ message: "User found", data: result });
       })
       .catch((err) => {
-        reject({ message: "User not found", data: err });
+        reject({ message: "User not found" });
+      });
+  });
+};
+
+export const isUserAvailable = (username, email) => {
+  return new Promise((resolve, reject) => {
+    getUserByUsername(username)
+      .then((result) => {
+        if (result) reject({ message: "Username already in use" });
+        else resolve({ message: "User is free" });
+      })
+      .catch(() => {
+        getUserByEmail(email)
+          .then((result) => {
+            if (result) reject({ message: "Email Already in use" });
+            else resolve({ message: "User is free" });
+          })
+          .catch(() => {
+            resolve({ message: "User is free" });
+          });
       });
   });
 };

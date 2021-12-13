@@ -1,22 +1,28 @@
 import { hashPassword, comparePassword } from "../../lib/bcrypt.js";
-import { addNewUser, getUserByUsername, getUserByEmail } from "./store.js";
+import { addNewUser, getUserByUsername, isUserAvailable } from "./store.js";
 import { generateToken } from "../../lib/JWT.js";
 export const SingUpUser = (userInformation) => {
   return new Promise((resolve, reject) => {
     //DB's funtion that verify if the email or username is used
-    //bcrypt funtion that hash the password
-    hashPasword(userInformation.password).then((result) => {
-      const hashedPassword = result.data;
-      //DB's funtion that validate and create a new User
-
-      addNewUser({ ...userInformation, password: hashedPassword })
-        .then((result) => {
-          resolve(result);
-        })
-        .catch((err) => {
-          reject(err);
+    isUserAvailable(userInformation.username, userInformation.email)
+      .then(() => {
+        //bcrypt funtion that hash the password
+        hashPassword(userInformation.password).then((result) => {
+          const hashedPassword = result.data;
+          console.log("hashed password");
+          //DB's funtion that validate and create a new User
+          addNewUser({ ...userInformation, password: hashedPassword })
+            .then((result) => {
+              resolve(result);
+            })
+            .catch((err) => {
+              reject(err);
+            });
         });
-    });
+      })
+      .catch((result) => {
+        reject({ message: result.message });
+      });
   });
 };
 

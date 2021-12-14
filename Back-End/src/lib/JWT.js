@@ -1,7 +1,8 @@
 import response from "../utils/response.js";
-
+import dotenv from "dotenv";
+dotenv.config();
 import jwt from "jsonwebtoken";
-const key = "SARAKATUNGA";
+const key = process.env.JWTKEY;
 
 //Promise
 export const generateToken = (data) => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import styles from "../../styles/auth.module.css";
 const Singup = () => {
   const [username, setUsername] = useState("");
@@ -65,7 +65,7 @@ const Singup = () => {
           <div>
             <p className={styles.formOptionsText}>
               Already have an acount?{" "}
-              <Link href="/auth/singin">
+              <Link to="/auth/singin">
                 <span className={styles.link}>Sing In</span>
               </Link>
             </p>

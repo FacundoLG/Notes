@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import styles from "../../styles/auth.module.css";
 
 const Singin = () => {
@@ -52,7 +52,7 @@ const Singin = () => {
           <div>
             <p className={styles.formOptionsText}>
               New here?{" "}
-              <Link href="/auth/singup">
+              <Link to="/auth/singup">
                 <span className={styles.link}>Sing Up</span>
               </Link>
             </p>

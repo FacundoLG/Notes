@@ -11,6 +11,11 @@ body {
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
 }
+#root {
+  height: 100%;
+  width: 100%;
+}
+
 :root {
   --primary-color: #272727;
   --secondary-color: #191919;

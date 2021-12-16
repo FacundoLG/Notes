@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styles from "./noteCard.module.css";
-import { HiDotsVertical, HiXCircle } from "react-icons/hi";
-const NoteCard = ({ noteData, setActive, isActive }) => {
+import { HiXCircle } from "react-icons/hi";
+import OptionsButton from "../OptionsButton/OptionsButton";
+const NoteCard = ({
+  noteData,
+  setActive,
+  isActive,
+  index,
+  optionsControler,
+}) => {
   const [noteTitle, setNoteTitle] = useState(noteData?.title || "Note title");
-  const [toolTip, setToolTip] = useState(false);
 
   const activeStatus = {
     background: "var(--primary-color)",
@@ -24,28 +30,13 @@ const NoteCard = ({ noteData, setActive, isActive }) => {
           setNoteTitle(e.target.value);
         }}
       />
-
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <HiDotsVertical
-          id="toolTipButton"
-          className={styles.dotsIcon}
-          onClick={(e) => {
-            setToolTip(!toolTip);
-          }}
-        />
-        {toolTip && (
-          <div id="tooltip" className={styles.cardToolTip}>
-            <div className={styles.toolTip}>
-              <ul>
-                <li>
-                  <p>Delete</p>
-                  <HiXCircle className={styles.toolTipIcon} />
-                </li>
-              </ul>
-            </div>
-          </div>
-        )}
-      </div>
+      <OptionsButton idReference={index} optionsId={optionsControler}>
+        <ul>
+          <li>
+            Delte <HiXCircle />
+          </li>
+        </ul>
+      </OptionsButton>
     </div>
   );
 };

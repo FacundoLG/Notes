@@ -9,12 +9,12 @@ const Singin = () => {
     e.preventDefault();
     console.log({ username, password });
     const userData = { username, password };
-    fetch("/api/singin", {
+    fetch("http://localhost:3010/user/singin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userData }),
+      body: JSON.stringify(userData),
     })
       .then((data) => data.json())
       .then(console.log);
@@ -52,7 +52,7 @@ const Singin = () => {
           <div>
             <p className={styles.formOptionsText}>
               New here?{" "}
-              <Link to="/auth/singup">
+              <Link to="/singup">
                 <span className={styles.link}>Sing Up</span>
               </Link>
             </p>

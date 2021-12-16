@@ -10,10 +10,13 @@ const Singup = () => {
     e.preventDefault();
     const userData = { username, email, password };
     console.log(userData);
-    fetch("http://localhost:3000/api/singup", {
+    fetch("http://localhost:3010/user/singup", {
       method: "POST",
-      body: JSON.stringify({ userData }),
-    });
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    })
+      .then((res) => res.json())
+      .then(console.log);
     setUsername("");
     setEmail("");
     setPassword("");
@@ -65,7 +68,7 @@ const Singup = () => {
           <div>
             <p className={styles.formOptionsText}>
               Already have an acount?{" "}
-              <Link to="/auth/singin">
+              <Link to="/singin">
                 <span className={styles.link}>Sing In</span>
               </Link>
             </p>

@@ -1,0 +1,15 @@
+.svgButton {
+  display: flex;
+  align-items: center;
+  border: none;
+  background: none;
+  color: var(--font-color);
+  font-size: 17px;
+  position: relative;
+}
+.Container {
+  display: flex;
+}
+.Options {
+  position: absolute;
+}

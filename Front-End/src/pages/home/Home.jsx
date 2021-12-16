@@ -6,8 +6,22 @@ import styles from "../../styles/Home.module.css";
 const Home = () => {
   const notes = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
   //NotesStates
-  const [activeId, setActiveId] = useState(1);
+  const [activeNote, setActiveNote] = useState(1);
 
+  const [activeOptions, setActiveOptions] = useState("");
+
+  useEffect(() => {
+    const getId = (target) => {
+      console.log(target?.id);
+      setActiveOptions(target?.id || "none");
+    };
+    document.addEventListener("click", ({ target }) => {
+      getId(target);
+    });
+    return document.removeEventListener("click", ({ target }) => {
+      getId(target);
+    });
+  }, []);
   return (
     <>
       <header className={styles.header}>
@@ -22,10 +36,12 @@ const Home = () => {
             <NoteCard
               key={data.id + "_" + index}
               setActive={(id) => {
-                setActiveId(id);
+                setActiveNote(id);
               }}
-              isActive={data.id === activeId}
+              isActive={data.id === activeNote}
               noteData={data}
+              index={index + 1}
+              optionsControler={activeOptions}
             />
           ))}
         </div>

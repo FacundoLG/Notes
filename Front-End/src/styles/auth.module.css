@@ -35,9 +35,19 @@
   border-radius: 50px;
   font-size: 16px;
   outline: none;
-  padding: 4px 14px;
+  padding: 6px 14px;
   color: var(--font-color);
 }
+
+.inputsContainer > input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  border: white 1px solid;
+  -webkit-box-shadow: 0 0 0px 30px #2d2d2d inset !important;
+  -webkit-text-fill-color: var(--font-color);
+}
+
 .formOptions {
   display: flex;
   justify-content: space-between;

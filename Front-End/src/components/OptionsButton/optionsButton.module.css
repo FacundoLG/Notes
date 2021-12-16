@@ -2,14 +2,44 @@
   display: flex;
   align-items: center;
   border: none;
-  background: none;
+  background: transparent;
+  padding: 6px;
   color: var(--font-color);
   font-size: 17px;
   position: relative;
+  border-radius: 50px;
+}
+.Container:hover .svgButton {
+  background: var(--white-opacity);
+  transition: 200ms;
 }
 .Container {
   display: flex;
 }
 .Options {
   position: absolute;
+}
+.Options ul {
+  margin: 0;
+  padding: 0px;
+  margin: 0 0 0 50px;
+  list-style: none;
+  background: var(--secondary-color);
+  border: 2px solid var(--white-opacity);
+  border-radius: 5px;
+}
+.Options li {
+  display: flex;
+  align-items: center;
+  padding: 7px 15px;
+}
+.Options i {
+  margin: 0 10px 0 0;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+.Options li:hover {
+  background: var(--white-opacity);
+  transition: 200ms;
 }

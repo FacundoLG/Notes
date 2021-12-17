@@ -1,4 +1,4 @@
-import response from "../utils/response.js";
+import { error } from "../utils/response.js";
 import dotenv from "dotenv";
 dotenv.config();
 import jwt from "jsonwebtoken";
@@ -12,18 +12,22 @@ export const generateToken = (data) => {
         console.log("[JWT Error]" + err);
         reject({ message: "Internal Error", data: null });
       } else if (tkn) {
-        resolve({ message: "", data: tkn });
+        resolve({ message: "", data: { tkn, username: data.username } });
       }
     });
   });
 };
 
 //middleware
-export const verifyTolen = (req, res, next) => {
+export const verifyToken = (req, res, next) => {
+  if (!req.headers.authorization) {
+    error(req, res, 401, { message: "Token is required" });
+  }
+  const token = req.headers.authorization.split(" ")[1];
   jwt.verify(token, key, (err, data) => {
     if (err) {
       console.log("[JWT Error]" + err);
-      response.error(req, res, 401, "Token expired or invalid");
+      error(req, res, 401, "Token expired or invalid");
     } else if (data) {
       req.user = data;
       next();

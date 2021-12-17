@@ -3,6 +3,10 @@ import { success, error } from "../../utils/response";
 import { createNewNote, getAllNotes } from "./controler";
 const router = express.Router();
 
+router.get("/test", (req, res) => {
+  res.json(req.user);
+});
+
 //Create new Note
 router.post("/", (req, res) => {
   const { noteData } = req.body;

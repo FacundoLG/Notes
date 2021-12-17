@@ -1,0 +1,32 @@
+import express from "express";
+import { success, error } from "../../utils/response";
+import { createNewNote, getAllNotes } from "./controler";
+const router = express.Router();
+
+//Create new Note
+router.post("/", (req, res) => {
+  const { noteData } = req.body;
+  console.log(noteData);
+  createNewNote(noteData)
+    .then((result) => {
+      success(req, res, 200, result);
+    })
+    .catch((result) => {
+      error(req, res, 400, result.message);
+    });
+});
+//Get all the notes of a user
+router.get("/", (req, res) => {
+  const { noteData } = req.body;
+  getAllNotes(noteData?.user_id)
+    .then((result) => {
+      success(req, res, 200, result);
+    })
+    .catch((result) => {
+      error(req, res, 400, result.message);
+    });
+});
+
+router.patch("/", (req, res) => {});
+
+export default router;

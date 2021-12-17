@@ -5,7 +5,7 @@ import dbConection from "../../lib/dbConection";
 dbConection();
 
 export const addNewUser = (userData) => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     console.log(userData);
     const newUser = new User({
       username: userData.username,
@@ -14,7 +14,7 @@ export const addNewUser = (userData) => {
       creationTime: new Date(),
       editionTime: new Date(),
     });
-    await newUser.save((err) => {
+    newUser.save((err) => {
       if (err)
         reject({ message: err.message || " Unexpected error ", data: err });
       else resolve({ message: "User created", data: null });

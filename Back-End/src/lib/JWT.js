@@ -7,12 +7,12 @@ const key = process.env.JWTKEY;
 //Promise
 export const generateToken = (data) => {
   return new Promise(async (resolve, reject) => {
-    jwt.sign(data, key, { expiresIn: "1h" }, (err, tkn) => {
+    jwt.sign(data, key, { expiresIn: "1h" }, (err, token) => {
       if (err) {
         console.log("[JWT Error]" + err);
         reject({ message: "Internal Error", data: null });
-      } else if (tkn) {
-        resolve({ message: "", data: { tkn, username: data.username } });
+      } else if (token) {
+        resolve({ message: "", data: { token, username: data.username } });
       }
     });
   });

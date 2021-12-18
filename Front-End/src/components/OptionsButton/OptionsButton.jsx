@@ -24,7 +24,13 @@ const OptionsButton = ({ idReference, optionsId, children }) => {
       </button>
       <div
         className={styles.Options}
-        style={isActive ? {} : { display: "none" }}
+        style={
+          isActive
+            ? {}
+            : {
+                display: "none",
+              }
+        }
       >
         {children}
       </div>

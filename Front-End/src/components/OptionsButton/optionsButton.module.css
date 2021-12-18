@@ -18,6 +18,8 @@
 }
 .Options {
   position: absolute;
+  overflow: hidden;
+  transition: 200ms;
 }
 .Options ul {
   margin: 0;

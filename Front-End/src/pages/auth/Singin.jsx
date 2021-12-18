@@ -1,10 +1,13 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/auth.module.css";
-
+import UserContext from "../../context/User/UserContext";
 const Singin = () => {
+  let navigate = useNavigate();
+  let user = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const handleLogin = (e) => {
     e.preventDefault();
     console.log({ username, password });
@@ -17,9 +20,16 @@ const Singin = () => {
       body: JSON.stringify(userData),
     })
       .then((data) => data.json())
-      .then(console.log);
-    setUsername("");
-    setPassword("");
+      .then((data) => {
+        user.setUserInfo(data.data);
+        console.log(data.data);
+        setUsername("");
+        setPassword("");
+      })
+      .then(() => {
+        console.log(user.token);
+        navigate("/home");
+      });
   };
   return (
     <div className={styles.formContainer}>

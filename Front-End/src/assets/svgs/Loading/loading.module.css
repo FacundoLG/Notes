@@ -1,0 +1,25 @@
+.LoadingPath {
+  stroke-dasharray: 165;
+  stroke-dashoffset: 165;
+  animation: loading 12s ease-in-out infinite;
+}
+.LoadingSVG {
+  animation: rotate 5s ease-in-out infinite;
+}
+@keyframes loading {
+  0%,
+  100% {
+    stroke-dasharray: 45;
+  }
+  50% {
+    stroke-dasharray: 10;
+  }
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

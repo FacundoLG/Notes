@@ -4,14 +4,32 @@ import NoteCard from "../../components/NoteCard/NoteCard";
 import TextContainer from "../../components/TextContainer/TextContainer";
 import UserContext from "../../context/User/UserContext";
 import styles from "../../styles/Home.module.css";
+import Loading from "../../assets/svgs/Loading/Loading.jsx";
 const Home = () => {
   const user = useContext(UserContext);
-  const notes = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
+  const [notes, setNotes] = useState(null);
+  const [isNotesLoading, setIsNotesLoading] = useState(true);
   const [activeId, setactiveId] = useState("");
   //NotesStates
   const [activeNote, setActiveNote] = useState(1);
   const [notesSelectorStatus, setNotesSelectorStatus] = useState("active");
+  const getNotes = () => {
+    fetch("http://localhost:3010/note", {
+      headers: {
+        Authorization: `bearer ${user.state.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+
+        // setIsNotesLoading(false);
+        // setNotes(res.data);
+      });
+  };
+
   useEffect(() => {
+    getNotes();
     const getId = (target) => {
       console.log(target?.id);
       setactiveId(target?.id || "none");
@@ -47,18 +65,28 @@ const Home = () => {
             notesSelectorStatus == "inactive" && styles.inactiveNoteSelector
           } `}
         >
-          {notes.map((data, index) => (
-            <NoteCard
-              key={data.id + "_" + index}
-              setActive={(id) => {
-                setActiveNote(id);
-              }}
-              isActive={data.id === activeNote}
-              noteData={data}
-              index={index + 1}
-              optionsControler={activeId}
-            />
-          ))}
+          {isNotesLoading ? (
+            <div className={styles.Message}>
+              <Loading />
+            </div>
+          ) : notes ? (
+            notes.map((data, index) => (
+              <NoteCard
+                key={data.id + "_" + index}
+                setActive={(id) => {
+                  setActiveNote(id);
+                }}
+                isActive={data.id === activeNote}
+                noteData={data}
+                index={index + 1}
+                optionsControler={activeId}
+              />
+            ))
+          ) : (
+            <div className={styles.Message}>
+              <p>You don't have notes, create a new one</p>
+            </div>
+          )}
         </div>
         <TextContainer />
       </main>

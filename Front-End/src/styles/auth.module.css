@@ -94,6 +94,10 @@ input:-webkit-autofill:active {
   color: var(--font-color);
   border-radius: 10px;
 }
+.actionButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
 .actionButton:hover {
   cursor: pointer;
   filter: brightness(1.2);

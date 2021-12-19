@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/auth.module.css";
 import UserContext from "../../context/User/UserContext";
@@ -8,6 +8,14 @@ const Singin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [generalError, setGeneralError] = useState("");
+
+  useEffect(() => {
+    if (username && password) {
+      document.getElementById("singinButton").disabled = false;
+    } else {
+      document.getElementById("singinButton").disabled = true;
+    }
+  }, [username, password]);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -32,7 +40,7 @@ const Singin = () => {
       })
       .catch((err) => {
         console.log(err.message);
-        if (err?.message) setPasswordError(err.message);
+        if (err?.message) setGeneralError(err.message);
       });
   };
   return (
@@ -76,6 +84,7 @@ const Singin = () => {
         </div>
         <div>
           <button
+            id="singinButton"
             type="submit"
             onClick={(e) => {
               handleLogin(e);

@@ -37,14 +37,18 @@ const Singup = () => {
         setPasswordError("");
       }
     }
-    if (passwordError === "" && emailError === "" && usernameError === "") {
+    if (
+      passwordError === "" &&
+      emailError === "" &&
+      usernameError === "" &&
+      password === confirmationPassword
+    ) {
       setcanSend(true);
       document.getElementById("submitButton").disabled = false;
     } else {
       setcanSend(false);
       document.getElementById("submitButton").disabled = true;
     }
-    console.log(passwordError, usernameError, emailError);
   }, [
     username,
     email,
@@ -59,9 +63,7 @@ const Singup = () => {
   const navigate = useNavigate();
   const handleRegister = (e) => {
     e.preventDefault();
-    if (!canSend) console.log("is disabled");
     const userData = { username, email, password };
-    console.log(userData);
     fetch("http://localhost:3010/user/singup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -69,15 +71,18 @@ const Singup = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        if (res.error) throw new Error(res);
-        else navigate("/singin");
-      })
-      .catch((err) => {
-        console.log(err);
+        if (res.error) {
+          console.log(res.error);
+          if (res.error.username) {
+            setUsername("");
+            setUsernameError(res.error.username);
+          }
+          if (res.error.email) {
+            setEmail("");
+            setEmailError(res.error.email);
+          }
+        } else navigate("/singin");
       });
-    setUsername("");
-    setEmail("");
     setPassword("");
     setConfirmationPassword("");
   };

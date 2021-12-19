@@ -21,8 +21,7 @@ router.post("/", (req, res) => {
 });
 //Get all the notes of a user
 router.get("/", (req, res) => {
-  const { noteData } = req.body;
-  getAllNotes(noteData?.user_id)
+  getAllNotes(req.user._id)
     .then((result) => {
       success(req, res, 200, result);
     })

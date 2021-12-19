@@ -52,13 +52,14 @@ export const isUserAvailable = (username, email) => {
   return new Promise((resolve, reject) => {
     getUserByUsername(username)
       .then((result) => {
-        if (result) reject({ message: "Username already in use" });
+        if (result)
+          reject({ message: { username: "Username already in use" } });
         else resolve({ message: "User is free" });
       })
       .catch(() => {
         getUserByEmail(email)
           .then((result) => {
-            if (result) reject({ message: "Email Already in use" });
+            if (result) reject({ message: { email: "Email Already in use" } });
             else resolve({ message: "User is free" });
           })
           .catch(() => {

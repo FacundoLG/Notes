@@ -49,12 +49,12 @@ export const SingInUser = (userInformation) => {
                 reject(result);
               });
           })
-          .catch((result) => {
-            reject(result);
+          .catch(() => {
+            reject({ message: "User or Password does not match" });
           });
       })
-      .catch((result) => {
-        reject(result);
+      .catch(() => {
+        reject({ message: "User or Password does not match" });
       });
   });
 };

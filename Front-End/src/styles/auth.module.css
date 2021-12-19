@@ -29,7 +29,7 @@
   cursor: pointer;
 }
 .inputsContainer > input {
-  margin: 0 0 15px 0;
+  margin: 0 0 2spx 0;
   background: var(--white-opacity);
   border: none;
   border-radius: 50px;
@@ -97,4 +97,12 @@ input:-webkit-autofill:active {
 .actionButton:hover {
   cursor: pointer;
   filter: brightness(1.2);
+}
+
+.errorText {
+  margin: 4px 0 4px 0;
+  font-size: 13px;
+  color: red;
+  height: 13px;
+  text-align: center;
 }

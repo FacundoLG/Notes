@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Singup from "../pages/auth/Singup";
 import Singin from "../pages/auth/Singin";
 import Home from "../pages/home/Home";
@@ -7,6 +7,7 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/singin" element={<Singin />} />
         <Route path="/singup" element={<Singup />} />
         <Route

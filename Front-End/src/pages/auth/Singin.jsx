@@ -7,6 +7,7 @@ const Singin = () => {
   let user = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [generalError, setGeneralError] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -21,14 +22,17 @@ const Singin = () => {
     })
       .then((data) => data.json())
       .then((data) => {
-        user.setUserInfo(data.data);
-        console.log(data.data);
-        setUsername("");
-        setPassword("");
+        if (data.error) throw new Error(data.error);
+        else {
+          user.setUserInfo(data.data);
+          setUsername("");
+          setPassword("");
+          navigate("/home");
+        }
       })
-      .then(() => {
-        console.log(user.token);
-        navigate("/home");
+      .catch((err) => {
+        console.log(err.message);
+        if (err?.message) setPasswordError(err.message);
       });
   };
   return (
@@ -44,6 +48,7 @@ const Singin = () => {
               setUsername(e.target.value);
             }}
           />
+          <p className={styles.errorText}></p>
           <label htmlFor="password">Password</label>
           <input
             id="password"
@@ -54,6 +59,7 @@ const Singin = () => {
             }}
           />
         </div>
+        <p className={styles.errorText}>{generalError}</p>
         <div className={styles.formOptions}>
           <div>
             <input type="button" className={styles.checkButton} />

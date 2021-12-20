@@ -38,20 +38,35 @@
   z-index: 6;
   transition: 250ms ease-out;
 }
+.notesContainer {
+  width: 230px;
+  height: 100%;
+}
 .inactiveNoteSelector {
-  width: 10px;
+  width: 7px;
   transition: 200ms;
   overflow-x: hidden;
 }
 
 .Message {
   display: flex;
+  flex-direction: column;
   height: 100%;
   justify-content: center;
   align-items: center;
+  font-weight: 100;
+}
+.PlusIcon {
+  font-size: 30px;
+  color: var(--contrast-color);
+}
+.PlusIcon:hover {
+  cursor: pointer;
+  transform: rotate(180deg);
+  transition: 500ms ease-in-out;
 }
 .Message p {
-  margin: 0 0 0 20px;
+  text-align: center;
 }
 @media (max-width: 580px) {
   .notesSelector {

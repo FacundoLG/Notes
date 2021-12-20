@@ -2,12 +2,13 @@ import Note from "./model";
 
 export const getNotes = (user_id) => {
   return new Promise((resolve, reject) => {
-    Note.find(user_id)
+    Note.find({ user_id })
       .then((results) => {
         if (results) resolve({ message: "Notes found", data: results });
         else reject({ message: "You dont have notes, crete a new one" });
       })
-      .catch(() => {
+      .catch((results) => {
+        console.log(results);
         reject({ message: "You dont have notes, crete a new one" });
       });
   });

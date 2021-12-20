@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FiMenu } from "react-icons/fi";
+import { FiMenu, FiPlusSquare } from "react-icons/fi";
 import NoteCard from "../../components/NoteCard/NoteCard";
 import TextContainer from "../../components/TextContainer/TextContainer";
 import UserContext from "../../context/User/UserContext";
@@ -11,9 +11,10 @@ const Home = () => {
   const [isNotesLoading, setIsNotesLoading] = useState(true);
   const [activeId, setactiveId] = useState("");
   //NotesStates
-  const [activeNote, setActiveNote] = useState(1);
+  const [activeNote, setActiveNote] = useState({});
   const [notesSelectorStatus, setNotesSelectorStatus] = useState("active");
   const getNotes = () => {
+    setIsNotesLoading(true);
     fetch("http://localhost:3010/note", {
       headers: {
         Authorization: `bearer ${user.state.token}`,
@@ -23,9 +24,31 @@ const Home = () => {
       .then((res) => {
         console.log(res);
 
-        // setIsNotesLoading(false);
-        // setNotes(res.data);
+        setNotes(res.message.data);
+        setIsNotesLoading(false);
       });
+  };
+  const createNote = () => {
+    fetch("http://localhost:3010/note", {
+      method: "POST",
+      headers: { Authorization: `bearer ${user.state.token}` },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        getNotes();
+      });
+  };
+
+  const editNote = (changeObject) => {
+    fetch("http:/localhost:3010/note", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "apllication/json",
+        Authorization: `bearer ${user.state.token}`,
+      },
+      body: JSON.stringify(changeObject),
+    });
   };
 
   useEffect(() => {
@@ -65,28 +88,34 @@ const Home = () => {
             notesSelectorStatus == "inactive" && styles.inactiveNoteSelector
           } `}
         >
-          {isNotesLoading ? (
-            <div className={styles.Message}>
-              <Loading />
-            </div>
-          ) : notes ? (
-            notes.map((data, index) => (
-              <NoteCard
-                key={data.id + "_" + index}
-                setActive={(id) => {
-                  setActiveNote(id);
-                }}
-                isActive={data.id === activeNote}
-                noteData={data}
-                index={index + 1}
-                optionsControler={activeId}
-              />
-            ))
-          ) : (
-            <div className={styles.Message}>
-              <p>You don't have notes, create a new one</p>
-            </div>
-          )}
+          <div className={styles.notesContainer}>
+            {isNotesLoading ? (
+              <div className={styles.Message}>
+                <Loading />
+              </div>
+            ) : notes ? (
+              notes.map((data) => (
+                <NoteCard
+                  key={data._id + "_Note"}
+                  setActive={(data) => {
+                    console.log(data);
+                    setActiveNote(data);
+                  }}
+                  isActive={data._id === activeNote._id}
+                  noteData={data}
+                  optionsControler={activeId}
+                />
+              ))
+            ) : (
+              <div className={styles.Message}>
+                <p>You don't have notes, create a new one</p>
+                <FiPlusSquare
+                  className={styles.PlusIcon}
+                  onClick={createNote}
+                />
+              </div>
+            )}
+          </div>
         </div>
         <TextContainer />
       </main>

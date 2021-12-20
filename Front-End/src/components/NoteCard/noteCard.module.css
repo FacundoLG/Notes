@@ -29,6 +29,7 @@
   width: 60%;
   border: none;
   color: var(--font-color);
+  pointer-events: none;
 }
 .noteCard > input:focus {
   outline: none;

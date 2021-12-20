@@ -6,7 +6,7 @@ const NoteCard = ({
   noteData,
   setActive,
   isActive,
-  index,
+
   optionsControler,
 }) => {
   const [noteTitle, setNoteTitle] = useState(noteData?.title || "Note title");
@@ -15,22 +15,30 @@ const NoteCard = ({
     background: "var(--primary-color)",
   };
 
+  const editTitle = () => {
+    document.getElementById(noteData._id + " Input").focus();
+  };
+
   return (
     <div
       className={styles.noteCard}
       style={isActive ? activeStatus : {}}
       onClick={() => {
-        setActive(noteData?.id);
+        setActive(noteData);
       }}
     >
       <input
+        id={noteData._id + " Input"}
         type="text"
         value={noteTitle}
         onChange={(e) => {
           setNoteTitle(e.target.value);
         }}
       />
-      <OptionsButton idReference={index} optionsId={optionsControler}>
+      <OptionsButton
+        idReference={noteData._id + "_Options"}
+        optionsId={optionsControler}
+      >
         <ul>
           <li>
             <i>
@@ -39,7 +47,7 @@ const NoteCard = ({
             Delete
           </li>
 
-          <li>
+          <li onClick={editTitle}>
             <i>
               <HiPencil />
             </i>

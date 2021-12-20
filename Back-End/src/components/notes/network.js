@@ -9,9 +9,9 @@ router.get("/test", (req, res) => {
 
 //Create new Note
 router.post("/", (req, res) => {
-  const { noteData } = req.body;
-  console.log(noteData);
-  createNewNote(noteData)
+  const user_id = req.user._id;
+  console.log(user_id);
+  createNewNote({ user_id, title: "New note" })
     .then((result) => {
       success(req, res, 200, result);
     })

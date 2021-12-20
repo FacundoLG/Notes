@@ -1,4 +1,4 @@
-import { createNote, getNotes } from "./store";
+import { createNote, getNotes, editNote } from "./store";
 export const createNewNote = (noteData) => {
   return new Promise((resolve, reject) => {
     createNote(noteData)
@@ -22,4 +22,8 @@ export const getAllNotes = (user_id) => {
   });
 };
 
-export const editNote = (newData) => {};
+export const editOneNote = (_id, data) => {
+  return new Promise((resolve, reject) => {
+    editNote(_id, data).then(resolve).catch(reject);
+  });
+};

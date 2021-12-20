@@ -1,6 +1,6 @@
 import express from "express";
 import { success, error } from "../../utils/response";
-import { createNewNote, getAllNotes } from "./controler";
+import { createNewNote, getAllNotes, editOneNote } from "./controler";
 const router = express.Router();
 
 router.get("/test", (req, res) => {
@@ -29,7 +29,15 @@ router.get("/", (req, res) => {
       error(req, res, 400, result.message);
     });
 });
-
-router.patch("/", (req, res) => {});
+//Edit notes
+router.patch("/", (req, res) => {
+  editOneNote(req.body._id, req.body.data)
+    .then((result) => {
+      success(req, res, 200, result.message);
+    })
+    .catch((result) => {
+      error(req, res, 500, result.message);
+    });
+});
 
 export default router;

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import TextTools from "../TextTools/TextTools";
 import styles from "./textContainer.module.css";
-const TextContainer = () => {
+const TextContainer = ({ editContent, content }) => {
   const [tool, setTool] = useState({ name: "P", refresh: true });
+  const [HTMLContent, setHTMLContent] = useState("");
   useEffect(() => {
-    console.log(document.getElementById("editable").innerHTML);
-    console.log(tool);
     switch (tool.name) {
       case "B":
         document.execCommand("bold");
@@ -40,6 +39,22 @@ const TextContainer = () => {
         break;
     }
   }, [tool]);
+
+  useEffect(() => {
+    document.getElementById("editable").innerHTML = content;
+  }, [content]);
+
+  useEffect(() => {
+    setInterval(() => {
+      const editableHTML = document.getElementById("editable").innerHTML;
+      setHTMLContent(editableHTML);
+    }, 3000);
+  }, []);
+  useEffect(() => {
+    if (HTMLContent !== content) {
+      editContent(HTMLContent);
+    }
+  }, [HTMLContent]);
 
   return (
     <div className={styles.TextContainer}>

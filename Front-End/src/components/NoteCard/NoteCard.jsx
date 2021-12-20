@@ -6,8 +6,8 @@ const NoteCard = ({
   noteData,
   setActive,
   isActive,
-
   optionsControler,
+  newTitle,
 }) => {
   const [noteTitle, setNoteTitle] = useState(noteData?.title || "Note title");
 
@@ -33,6 +33,9 @@ const NoteCard = ({
         value={noteTitle}
         onChange={(e) => {
           setNoteTitle(e.target.value);
+        }}
+        onBlur={() => {
+          newTitle(noteTitle);
         }}
       />
       <OptionsButton

@@ -14,7 +14,6 @@ const Home = () => {
   const [activeNote, setActiveNote] = useState({});
   const [notesSelectorStatus, setNotesSelectorStatus] = useState("active");
   const getNotes = () => {
-    setIsNotesLoading(true);
     fetch("http://localhost:3010/note", {
       headers: {
         Authorization: `bearer ${user.state.token}`,
@@ -40,21 +39,25 @@ const Home = () => {
       });
   };
 
-  const editNote = (changeObject) => {
-    fetch("http:/localhost:3010/note", {
-      method: "PUT",
+  const editNote = (data) => {
+    fetch("http://localhost:3010/note", {
+      method: "PATCH",
       headers: {
-        "Content-Type": "apllication/json",
+        "Content-Type": "application/json",
         Authorization: `bearer ${user.state.token}`,
       },
-      body: JSON.stringify(changeObject),
-    });
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        getNotes();
+      });
   };
 
   useEffect(() => {
     getNotes();
     const getId = (target) => {
-      console.log(target?.id);
       setactiveId(target?.id || "none");
     };
     document.addEventListener("click", ({ target }) => {
@@ -93,17 +96,19 @@ const Home = () => {
               <div className={styles.Message}>
                 <Loading />
               </div>
-            ) : notes ? (
+            ) : notes.length > 0 ? (
               notes.map((data) => (
                 <NoteCard
                   key={data._id + "_Note"}
                   setActive={(data) => {
-                    console.log(data);
                     setActiveNote(data);
                   }}
                   isActive={data._id === activeNote._id}
                   noteData={data}
                   optionsControler={activeId}
+                  newTitle={(title) => {
+                    editNote({ _id: data._id, data: { title } });
+                  }}
                 />
               ))
             ) : (
@@ -117,7 +122,12 @@ const Home = () => {
             )}
           </div>
         </div>
-        <TextContainer />
+        <TextContainer
+          content={activeNote?.content}
+          editContent={(content) => {
+            editNote({ _id: activeNote._id, data: { content } });
+          }}
+        />
       </main>
     </>
   );

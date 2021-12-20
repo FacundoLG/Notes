@@ -10,7 +10,6 @@ const UserState = ({ children }) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
 
   const setUserInfo = (userData) => {
-    console.log(userData);
     dispatch({
       type: "SET_USER",
       payload: userData,

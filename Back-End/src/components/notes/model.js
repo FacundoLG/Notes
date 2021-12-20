@@ -12,7 +12,8 @@ const NotesSchema = new mongoose.Schema({
   },
   content: {
     type: String,
-    required: false,
+    required: true,
+    default: "<h1>Write Something</h1>",
   },
   creationTime: {
     required: true,

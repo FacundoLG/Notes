@@ -29,3 +29,15 @@ export const createNote = (noteData) => {
     });
   });
 };
+export const editNote = (_id, data) => {
+  return new Promise((resolve, reject) => {
+    Note.findOneAndUpdate({ _id }, data)
+      .then(() => {
+        resolve({ message: "Edited" });
+      })
+      .catch((err) => {
+        console.log("[NOTE EDIT]" + err);
+        reject({ message: "Error" });
+      });
+  });
+};

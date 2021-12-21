@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import TextTools from "../TextTools/TextTools";
 import styles from "./textContainer.module.css";
-const TextContainer = ({ editContent, content }) => {
+const TextContainer = ({ initialData, textData }) => {
   const [tool, setTool] = useState({ name: "P", refresh: true });
-  const [HTMLContent, setHTMLContent] = useState("");
   useEffect(() => {
     switch (tool.name) {
       case "B":
@@ -39,22 +38,10 @@ const TextContainer = ({ editContent, content }) => {
         break;
     }
   }, [tool]);
-
   useEffect(() => {
-    document.getElementById("editable").innerHTML = content;
-  }, [content]);
-
-  useEffect(() => {
-    setInterval(() => {
-      const editableHTML = document.getElementById("editable").innerHTML;
-      setHTMLContent(editableHTML);
-    }, 3000);
-  }, []);
-  useEffect(() => {
-    if (HTMLContent !== content) {
-      editContent(HTMLContent);
-    }
-  }, [HTMLContent]);
+    document.getElementById("editable").innerHTML = initialData.content;
+    textData(initialData);
+  }, [initialData]);
 
   return (
     <div className={styles.TextContainer}>

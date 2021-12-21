@@ -9,7 +9,7 @@ const dbConnection = async () => {
     );
   await mongoose
     .connect(URI)
-    .then((mongoose) => {
+    .then(() => {
       console.log("[DB] Conected");
     })
     .catch((err) => {

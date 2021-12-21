@@ -12,8 +12,33 @@ const Home = () => {
   const [activeId, setactiveId] = useState("");
   //NotesStates
   const [activeNote, setActiveNote] = useState({});
-  const [notesSelectorStatus, setNotesSelectorStatus] = useState("active");
-  const getNotes = () => {
+  const [textEditorInfo, setTextEditorInfo] = useState("active");
+  const [notesSelectorStatus, setNotesSelectorStatus] = useState(false);
+  //Text
+
+  useEffect(() => {
+    if (textEditorInfo.content !== activeNote.content) {
+      editNote({
+        _id: textEditorInfo._id,
+        data: { content: textEditorInfo.content },
+      });
+    }
+  }, [textEditorInfo]);
+
+  useEffect(() => {
+    getNotes(true);
+    const getId = (target) => {
+      setactiveId(target?.id || "none");
+    };
+    document.addEventListener("click", ({ target }) => {
+      getId(target);
+    });
+    return document.removeEventListener("click", ({ target }) => {
+      getId(target);
+    });
+  }, []);
+
+  const getNotes = (initial) => {
     fetch("http://localhost:3010/note", {
       headers: {
         Authorization: `bearer ${user.state.token}`,
@@ -22,8 +47,8 @@ const Home = () => {
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
-
         setNotes(res.message.data);
+        initial && setActiveNote(res?.message?.data[0]);
         setIsNotesLoading(false);
       });
   };
@@ -55,19 +80,6 @@ const Home = () => {
       });
   };
 
-  useEffect(() => {
-    getNotes();
-    const getId = (target) => {
-      setactiveId(target?.id || "none");
-    };
-    document.addEventListener("click", ({ target }) => {
-      getId(target);
-    });
-    return document.removeEventListener("click", ({ target }) => {
-      getId(target);
-    });
-  }, []);
-
   return (
     <>
       <header className={styles.header}>
@@ -97,20 +109,26 @@ const Home = () => {
                 <Loading />
               </div>
             ) : notes.length > 0 ? (
-              notes.map((data) => (
-                <NoteCard
-                  key={data._id + "_Note"}
-                  setActive={(data) => {
-                    setActiveNote(data);
-                  }}
-                  isActive={data._id === activeNote._id}
-                  noteData={data}
-                  optionsControler={activeId}
-                  newTitle={(title) => {
-                    editNote({ _id: data._id, data: { title } });
-                  }}
+              <>
+                {notes.map((data) => (
+                  <NoteCard
+                    key={data._id + "_Note"}
+                    setActive={(data) => {
+                      setActiveNote(data);
+                    }}
+                    isActive={data._id === activeNote._id}
+                    noteData={data}
+                    optionsControler={activeId}
+                    newTitle={(title) => {
+                      editNote({ _id: data._id, data: { title } });
+                    }}
+                  />
+                ))}
+                <FiPlusSquare
+                  className={styles.PlusIcon}
+                  onClick={createNote}
                 />
-              ))
+              </>
             ) : (
               <div className={styles.Message}>
                 <p>You don't have notes, create a new one</p>
@@ -123,9 +141,9 @@ const Home = () => {
           </div>
         </div>
         <TextContainer
-          content={activeNote?.content}
-          editContent={(content) => {
-            editNote({ _id: activeNote._id, data: { content } });
+          initialData={activeNote}
+          textData={(data) => {
+            setTextEditorInfo(data);
           }}
         />
       </main>

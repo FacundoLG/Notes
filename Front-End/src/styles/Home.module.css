@@ -39,8 +39,27 @@
   transition: 250ms ease-out;
 }
 .notesContainer {
+  overflow-y: auto;
   width: 230px;
   height: 100%;
+}
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--secondary-color);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--font-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 .inactiveNoteSelector {
   width: 7px;

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { error } from "../utils/response.js";
 import dotenv from "dotenv";
 dotenv.config();
@@ -6,7 +7,7 @@ const key = process.env.JWTKEY;
 
 //Promise
 export const generateToken = (data) => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     jwt.sign(data, key, { expiresIn: "1h" }, (err, token) => {
       if (err) {
         console.log("[JWT Error]" + err);

@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = (env, arg) => {
   const isDevelopment = arg.mode === "development";
   return {
-    entry: "./src/index.js",
+    entry: ["@babel/polyfill", "./src/index.js"],
     output: {
       filename: "[name].[hash].js",
       path: path.resolve(__dirname, "dist"),

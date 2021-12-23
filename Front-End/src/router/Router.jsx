@@ -1,9 +1,10 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Singup from "../pages/auth/Singup";
 import Singin from "../pages/auth/Singin";
-import Home from "../pages/home/Home";
+import Home from "../pages/Home";
 import AuthComponent from "../components/Auth/AuthComponent";
-const Router = () => {
+
+const Router = function () {
   return (
     <BrowserRouter>
       <Routes>

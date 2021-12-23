@@ -1,33 +1,3 @@
-.header {
-  width: 100%;
-  height: 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 20px;
-  background: var(--secondary-color);
-  color: var(--font-color);
-}
-.menuIcon {
-  font-size: 30px;
-  color: var(--contrast-color);
-}
-.menuIcon:hover {
-  cursor: pointer;
-}
-.header > p {
-  font-size: 17px;
-}
-.header > p > span {
-  color: var(--contrast-color);
-}
-.mainContainer {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  width: 100vw;
-  height: 100%;
-}
 .notesSelector {
   position: absolute;
   width: 230px;
@@ -86,9 +56,4 @@
 }
 .Message p {
   text-align: center;
-}
-@media (max-width: 580px) {
-  .notesSelector {
-    position: absolute;
-  }
 }

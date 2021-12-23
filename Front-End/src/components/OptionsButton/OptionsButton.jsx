@@ -4,7 +4,7 @@ import styles from "./optionsButton.module.css";
 const OptionsButton = ({ idReference, optionsId, children }) => {
   const [isActive, setIsActive] = useState(false);
 
-  const id = "OptionButton_" + (idReference || 1);
+  const id = idReference || 1;
 
   useEffect(() => {
     if (optionsId === id) {

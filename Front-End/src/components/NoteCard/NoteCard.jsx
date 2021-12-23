@@ -2,33 +2,28 @@ import React, { useEffect, useState } from "react";
 import styles from "./noteCard.module.css";
 import { HiXCircle, HiPencil } from "react-icons/hi";
 import OptionsButton from "../OptionsButton/OptionsButton";
-const NoteCard = ({
-  noteData,
-  setActive,
-  isActive,
-  optionsControler,
-  newTitle,
-}) => {
+const NoteCard = ({ noteData, newTitle, isActive }) => {
   const [noteTitle, setNoteTitle] = useState(noteData?.title || "Note title");
-
+  const [active, setActive] = useState(false);
   const activeStatus = {
     background: "var(--primary-color)",
   };
-
   const editTitle = () => {
     document.getElementById(noteData._id + " Input").focus();
   };
+  useEffect(() => {
+    console.log(isActive);
+    setActive(isActive);
+  }, [isActive]);
 
   return (
     <div
+      id={noteData._id}
       className={styles.noteCard}
-      style={isActive ? activeStatus : {}}
-      onClick={() => {
-        setActive(noteData);
-      }}
+      style={active ? activeStatus : {}}
     >
       <input
-        id={noteData._id + " Input"}
+        id={noteData?._id + " Input"}
         type="text"
         value={noteTitle}
         onChange={(e) => {
@@ -38,10 +33,7 @@ const NoteCard = ({
           newTitle(noteTitle);
         }}
       />
-      <OptionsButton
-        idReference={noteData._id + "_Options"}
-        optionsId={optionsControler}
-      >
+      <OptionsButton idReference={noteData?._id + "_Options"}>
         <ul>
           <li>
             <i>

@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import TextTools from "../TextTools/TextTools";
 import styles from "./textContainer.module.css";
-const TextContainer = ({ initialData, textData }) => {
+const TextContainer = () => {
   const [tool, setTool] = useState({ name: "P", refresh: true });
-  const [inStoreData, setInStoreData] = useState();
-  const [currentTextContent, setCurrentTextContent] = useState(
-    initialData?.content
-  );
+
   useEffect(() => {
     switch (tool.name) {
       case "B":
@@ -42,38 +39,6 @@ const TextContainer = ({ initialData, textData }) => {
         break;
     }
   }, [tool]);
-
-  useEffect(() => {
-    document.getElementById("editable").innerHTML = initialData?.content;
-    textData(initialData);
-    setInStoreData(initialData);
-  }, [initialData]);
-
-  useEffect(() => {
-    const editable = document.getElementById("editable");
-    editable.addEventListener("keydown", (e) => {
-      setCurrentTextContent(e.target.innerHTML);
-    });
-    return () => {
-      editable.removeEventListener("keydown");
-      textData({ ...initialData, content: editable.innerHTML });
-    };
-  }, []);
-
-  useEffect(() => {
-    console.log("interval");
-    const isWriting = setInterval(() => {
-      if (currentTextContent !== inStoreData?.content) {
-        console.log("sending");
-        console.log(currentTextContent, inStoreData);
-        setInStoreData({ ...initialData, content: currentTextContent });
-        textData({ ...initialData, content: currentTextContent });
-      }
-    }, 1000);
-    return () => {
-      clearInterval(isWriting);
-    };
-  }, [currentTextContent, inStoreData]);
 
   return (
     <div className={styles.TextContainer}>

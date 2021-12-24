@@ -11,7 +11,6 @@ const NotesManager = () => {
   const options = useContext(OptionsContext);
   //API
   const [userNotes, setUserNotes] = useState();
-  const [selectorStatus, setSelectorStatus] = useState("inactive");
   let getNotes = useFetch("http://localhost:3010/note");
 
   useEffect(() => {
@@ -34,20 +33,9 @@ const NotesManager = () => {
 
   return (
     <>
-      <header className={styles.header}>
-        <BsList
-          className={styles.listIcon}
-          onClick={() => {
-            setSelectorStatus(
-              selectorStatus == "active" ? "inactive" : "active"
-            );
-          }}
-        />
-      </header>
       <main className={styles.mainContainer}>
         <NotesSelector
           userNotes={userNotes}
-          selectorStatus={selectorStatus}
           setInactive={() => {
             setSelectorStatus("inactive");
           }}

@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { FiMenu, FiPlusSquare } from "react-icons/fi";
-
 import NoteCard from "../NoteCard/NoteCard";
 import Loading from "../../assets/svgs/Loading/Loading.jsx";
 import styles from "./notesSelector.module.css";
 
-const NotesSelector = ({ userNotes, selectorStatus, setInactive }) => {
+const NotesSelector = ({ userNotes }) => {
   const [notes, setNotes] = useState(null);
   const [notesLoading, setNotesLoading] = useState(true);
   const [activeNoteID, setActiveNoteID] = useState();
+  const [selectorStatus, setSelectorStatus] = useState("inactive");
 
   useEffect(() => {
     if (!activeNoteID && notes) {
@@ -20,7 +20,9 @@ const NotesSelector = ({ userNotes, selectorStatus, setInactive }) => {
     const selector = document.getElementById("noteSelector");
     selector.addEventListener("click", handleSetActiveNoteID);
     setNotes(userNotes);
-    setNotesLoading(false);
+    setTimeout(() => {
+      setNotesLoading(false);
+    }, 800);
     return () => {
       selector.removeEventListener("click", handleSetActiveNoteID);
     };
@@ -29,31 +31,47 @@ const NotesSelector = ({ userNotes, selectorStatus, setInactive }) => {
   const handleSetActiveNoteID = (e) => {
     setActiveNoteID(e.target.id);
     if (e.target.id === "noteSelector") {
-      setInactive();
+      setSelectorStatus("inactive");
     }
   };
+
+  const handleSelectorStatus = () => {};
   return (
     <>
+      <div className={styles.SelectorButton} onClick={handleSelectorStatus}>
+        <FiMenu
+          onClick={() =>
+            setSelectorStatus(
+              selectorStatus == "active" ? "inactive" : "active"
+            )
+          }
+        />
+      </div>
       <div
         id="noteSelector"
-        className={`${styles.notesSelector} 
+        className={`${styles.optionContainer} 
              ${selectorStatus == "inactive" && styles.inactiveNoteSelector}`}
       >
-        <div className={styles.notesContainer}>
+        <div className={styles.notesOptions}>
+          <div className={styles.appTitle}>
+            <p>Notes</p>
+            <FiPlusSquare className={styles.PlusIcon} />
+          </div>
           {notesLoading ? (
             <div className={styles.Message}>
               <Loading size={55} />
             </div>
           ) : notes?.length > 0 ? (
             <>
-              {notes?.map((data) => (
-                <NoteCard
-                  key={data._id}
-                  noteData={data}
-                  isActive={data._id === activeNoteID}
-                />
-              ))}
-              <FiPlusSquare className={styles.PlusIcon} />
+              <div className={styles.notesContainer}>
+                {notes?.map((data) => (
+                  <NoteCard
+                    key={data._id}
+                    noteData={data}
+                    isActive={data._id === activeNoteID}
+                  />
+                ))}
+              </div>
             </>
           ) : (
             <div className={styles.Message}>

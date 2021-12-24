@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "./textTools.module.css";
-const TextTools = ({ currentTool }) => {
+
+const TextTools = ({ currentTool, children }) => {
   useEffect(() => {
     const toolSelector = (e) => {
       if (e.target.id) {
@@ -17,6 +18,7 @@ const TextTools = ({ currentTool }) => {
 
   return (
     <div className={styles.toolsContainer}>
+      {children}
       <ul className={styles.toolsList}>
         <button id="T1">T1</button>
         <button id="T2">T2</button>
@@ -35,6 +37,7 @@ const TextTools = ({ currentTool }) => {
           A
         </button>
       </ul>
+      <div></div>
     </div>
   );
 };

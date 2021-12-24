@@ -16,6 +16,12 @@
   overflow-wrap: break-word;
   outline: none;
 }
+.textStatus {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 @media (max-width: 580px) {
   .TextContainer {
     justify-content: space-between;

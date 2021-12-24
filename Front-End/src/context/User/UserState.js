@@ -5,6 +5,7 @@ const UserState = ({ children }) => {
   const initialState = {
     token: null,
     username: null,
+    activeNote: null,
   };
 
   const [state, dispatch] = useReducer(UserReducer, initialState);
@@ -16,8 +17,15 @@ const UserState = ({ children }) => {
     });
   };
 
+  const setActiveUserNote = (noteData) => {
+    dispatch({
+      type: "SET_ACTIVE_NOTE",
+      payload: noteData,
+    });
+  };
+
   return (
-    <UserContext.Provider value={{ state, setUserInfo }}>
+    <UserContext.Provider value={{ state, setUserInfo, setActiveUserNote }}>
       {children}
     </UserContext.Provider>
   );

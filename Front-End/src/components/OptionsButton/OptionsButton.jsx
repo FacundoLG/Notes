@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import OptionsContext from "../../context/Options/OptionsContext";
 import styles from "./optionsButton.module.css";
-const OptionsButton = ({ idReference, optionsId, children }) => {
+const OptionsButton = ({ idReference, children }) => {
   const [isActive, setIsActive] = useState(false);
-
+  const option = useContext(OptionsContext);
   const id = idReference || 1;
 
   useEffect(() => {
-    if (optionsId === id) {
+    if (option.state.current_id === id) {
       setIsActive(!isActive);
     } else {
       setIsActive(false);
     }
-  }, [optionsId]);
+  }, [option]);
 
   return (
     <div id={id} className={styles.Container}>

@@ -3,6 +3,7 @@ import Singup from "../pages/auth/Singup";
 import Singin from "../pages/auth/Singin";
 import Home from "../pages/Home";
 import AuthComponent from "../components/Auth/AuthComponent";
+import OptionsState from "../context/Options/OptionsState";
 
 const Router = function () {
   return (
@@ -15,7 +16,9 @@ const Router = function () {
           path="/home"
           element={
             <AuthComponent>
-              <Home />
+              <OptionsState>
+                <Home />
+              </OptionsState>
             </AuthComponent>
           }
         />

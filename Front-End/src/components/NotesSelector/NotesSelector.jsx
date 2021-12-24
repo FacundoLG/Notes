@@ -5,59 +5,65 @@ import NoteCard from "../NoteCard/NoteCard";
 import Loading from "../../assets/svgs/Loading/Loading.jsx";
 import styles from "./notesSelector.module.css";
 
-const NotesSelector = ({ userNotes }) => {
+const NotesSelector = ({ userNotes, selectorStatus, setInactive }) => {
   const [notes, setNotes] = useState(null);
   const [notesLoading, setNotesLoading] = useState(true);
-  const [activeID, setActiveID] = useState();
+  const [activeNoteID, setActiveNoteID] = useState();
+
+  useEffect(() => {
+    if (!activeNoteID && notes) {
+      setActiveNoteID(notes[0]?._id);
+    }
+  }, [notes, activeNoteID]);
+
   useEffect(() => {
     const selector = document.getElementById("noteSelector");
-    selector.addEventListener("click", handleSetActiveID);
-    return () => {
-      selector.removeEventListener("click", handleSetActiveID);
-    };
-  }, []);
-
-  useEffect(() => {
-    userNotes && setNotes(userNotes);
+    selector.addEventListener("click", handleSetActiveNoteID);
+    setNotes(userNotes);
     setNotesLoading(false);
-  }, [userNotes]);
+    return () => {
+      selector.removeEventListener("click", handleSetActiveNoteID);
+    };
+  }, [userNotes, selectorStatus]);
 
-  const handleSetActiveID = (e) => {
-    setActiveID(e.target.id);
+  const handleSetActiveNoteID = (e) => {
+    setActiveNoteID(e.target.id);
+    if (e.target.id === "noteSelector") {
+      setInactive();
+    }
   };
   return (
-    <div
-      id="noteSelector"
-      className={`${styles.notesSelector} 
-        `}
-      // ${
-      //   notesSelectorStatus == "inactive" && styles.inactiveNoteSelector
-      // }
-    >
-      <div className={styles.notesContainer}>
-        {notesLoading ? (
-          <div className={styles.Message}>
-            <Loading />
-          </div>
-        ) : notes?.length > 0 ? (
-          <>
-            {notes?.map((data) => (
-              <NoteCard
-                key={data._id}
-                noteData={data}
-                isActive={data._id === activeID}
-              />
-            ))}
-            <FiPlusSquare className={styles.PlusIcon} />
-          </>
-        ) : (
-          <div className={styles.Message}>
-            <p>You don't have notes, create a new one</p>
-            <FiPlusSquare className={styles.PlusIcon} />
-          </div>
-        )}
+    <>
+      <div
+        id="noteSelector"
+        className={`${styles.notesSelector} 
+             ${selectorStatus == "inactive" && styles.inactiveNoteSelector}`}
+      >
+        <div className={styles.notesContainer}>
+          {notesLoading ? (
+            <div className={styles.Message}>
+              <Loading size={55} />
+            </div>
+          ) : notes?.length > 0 ? (
+            <>
+              {notes?.map((data) => (
+                <NoteCard
+                  key={data._id}
+                  noteData={data}
+                  isActive={data._id === activeNoteID}
+                />
+              ))}
+              <FiPlusSquare className={styles.PlusIcon} />
+            </>
+          ) : (
+            <div className={styles.Message}>
+              <p>You don't have notes, create a new one</p>
+              <FiPlusSquare className={styles.PlusIcon} />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

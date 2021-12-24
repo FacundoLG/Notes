@@ -19,12 +19,12 @@
 .Options {
   position: absolute;
   overflow: hidden;
+  margin: 0 0 0 50px;
   transition: 200ms;
 }
 .Options ul {
   margin: 0;
   padding: 0px;
-  margin: 0 0 0 50px;
   list-style: none;
   background: var(--secondary-color);
   border: 2px solid var(--white-opacity);

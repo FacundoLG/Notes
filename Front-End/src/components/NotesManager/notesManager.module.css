@@ -1,25 +1,16 @@
 .header {
   width: 100%;
-  height: 60px;
+  height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 20px;
+  padding: 0px 10px;
   background: var(--secondary-color);
-  color: var(--font-color);
-}
-.menuIcon {
+  color: var(--contrast-color);
   font-size: 30px;
-  color: var(--contrast-color);
 }
-.menuIcon:hover {
+.listIcon:hover {
   cursor: pointer;
-}
-.header > p {
-  font-size: 17px;
-}
-.header > p > span {
-  color: var(--contrast-color);
 }
 .mainContainer {
   position: relative;

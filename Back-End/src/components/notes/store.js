@@ -41,3 +41,14 @@ export const editNote = (_id, data) => {
       });
   });
 };
+export const findOneNotAndDelete = (noteID) => {
+  return new Promise((resolve, reject) => {
+    Note.findByIdAndDelete(noteID)
+      .then(() => {
+        resolve({ message: "deleted" });
+      })
+      .catch(() => {
+        reject({ message: "Deletion error" });
+      });
+  });
+};

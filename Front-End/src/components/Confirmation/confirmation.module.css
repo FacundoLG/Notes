@@ -1,0 +1,57 @@
+.ConfirmationContainer {
+  display: flex;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 8;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.Confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--secondary-color);
+  width: 95vw;
+  max-width: 300px;
+  height: 30vh;
+  max-height: 150px;
+  border-radius: 10px;
+  padding: 20px 10px 0 10px;
+}
+.Confirmation > p {
+  margin: 0;
+  font-size: 30px;
+}
+.Confirmation > div {
+  height: 100%;
+  display: flex;
+  width: 70%;
+  align-items: center;
+  justify-content: space-between;
+}
+.Confirmation > div > i {
+  font-size: 40px;
+}
+.confirm {
+  border-radius: 50%;
+  padding: 5px;
+}
+.cancel {
+  border-radius: 50%;
+  padding: 5px;
+  color: var(--contrast-color);
+}
+
+.confirm:hover {
+  cursor: pointer;
+  background: var(--white-opacity);
+  transition: 200ms;
+}
+.cancel:hover {
+  cursor: pointer;
+  background: var(--white-opacity);
+  transition: 200ms;
+}

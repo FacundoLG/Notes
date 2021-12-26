@@ -3,14 +3,34 @@ import styles from "./noteCard.module.css";
 import { HiXCircle, HiPencil } from "react-icons/hi";
 import OptionsButton from "../OptionsButton/OptionsButton";
 import UserContext from "../../context/User/UserContext";
-const NoteCard = ({ noteData, newTitle, isActive }) => {
+import useFetch from "../../hooks/useFetch";
+import Confirmation from "../Confirmation/Confirmation";
+const NoteCard = ({ noteData, isActive, getNewNotes }) => {
   const user = useContext(UserContext);
   const [noteTitle, setNoteTitle] = useState(noteData?.title || "Note title");
+  const editNote = useFetch("http://localhost:3010/note");
+  const [confirmation, setConfirmation] = useState("inactive");
   const activeStatus = {
     background: "var(--primary-color)",
   };
   const editTitle = () => {
     document.getElementById(noteData._id + " Input").focus();
+  };
+
+  const handleUploadNewTitle = () => {
+    editNote(
+      { method: "PATCH" },
+      { _id: noteData._id, data: { title: noteTitle } }
+    );
+  };
+
+  const onConfirmationResponse = (wantToDelete) => {
+    setConfirmation("inactive");
+    if (wantToDelete) {
+      editNote({ method: "DELETE" }, { _id: noteData._id });
+      user.setActiveUserNote(null);
+      getNewNotes();
+    }
   };
   useEffect(() => {
     if (isActive) {
@@ -24,6 +44,12 @@ const NoteCard = ({ noteData, newTitle, isActive }) => {
       className={styles.noteCard}
       style={isActive ? activeStatus : {}}
     >
+      {confirmation == "active" && (
+        <Confirmation
+          text={"Are you sure"}
+          response={(wantToDelete) => onConfirmationResponse(wantToDelete)}
+        />
+      )}
       <input
         id={noteData?._id + " Input"}
         type="text"
@@ -32,12 +58,16 @@ const NoteCard = ({ noteData, newTitle, isActive }) => {
           setNoteTitle(e.target.value);
         }}
         onBlur={() => {
-          newTitle(noteTitle);
+          handleUploadNewTitle();
         }}
       />
       <OptionsButton idReference={noteData?._id + "_Options"}>
         <ul>
-          <li>
+          <li
+            onClick={() => {
+              setConfirmation("active");
+            }}
+          >
             <i>
               <HiXCircle />
             </i>

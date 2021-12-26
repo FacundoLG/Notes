@@ -11,6 +11,7 @@ const NotesManager = () => {
   const options = useContext(OptionsContext);
   //API
   const [userNotes, setUserNotes] = useState();
+  const [loading, setIsLoading] = useState();
   let getNotes = useFetch("http://localhost:3010/note");
 
   useEffect(() => {
@@ -21,16 +22,27 @@ const NotesManager = () => {
     };
   }, []);
 
+  // useEffect(() => {
+  //   if (user.state.activeNote === null) {
+  //     user.setActiveNote(userNotes[0] || null);
+  //   }
+  // }, [user.state.activeNote]);
+
   const handleSetClickedID = (e) => {
     options.setID(e.target.id);
   };
 
   const handleGetNotes = () => {
-    getNotes().then((res) => {
-      setUserNotes(res.data);
-    });
+    setIsLoading(true);
+    getNotes()
+      .then((res) => {
+        setUserNotes(res.data);
+      })
+      .then(() => {
+        setIsLoading(false);
+      });
   };
-
+  console.log(user?.state?.activeNote?.title);
   return (
     <>
       <main className={styles.mainContainer}>
@@ -39,8 +51,12 @@ const NotesManager = () => {
           setInactive={() => {
             setSelectorStatus("inactive");
           }}
+          getNewNotes={() => handleGetNotes()}
         />
-        <TextContainer activeNote={user.state.activeNote} />
+        <TextContainer
+          getNewNotes={() => handleGetNotes()}
+          loadingState={loading}
+        />
       </main>
     </>
   );

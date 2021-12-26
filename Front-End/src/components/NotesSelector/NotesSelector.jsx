@@ -3,12 +3,26 @@ import { FiMenu, FiPlusSquare } from "react-icons/fi";
 import NoteCard from "../NoteCard/NoteCard";
 import Loading from "../../assets/svgs/Loading/Loading.jsx";
 import styles from "./notesSelector.module.css";
+import useFetch from "../../hooks/useFetch";
+import Confirmation from "../Confirmation/Confirmation";
 
-const NotesSelector = ({ userNotes }) => {
+const NotesSelector = ({ userNotes, getNewNotes }) => {
   const [notes, setNotes] = useState(null);
   const [notesLoading, setNotesLoading] = useState(true);
   const [activeNoteID, setActiveNoteID] = useState();
   const [selectorStatus, setSelectorStatus] = useState("inactive");
+  const addNote = useFetch("http://localhost:3010/note");
+  const SetActiveNoteID = (e) => {
+    setActiveNoteID(e.target.id);
+    if (e.target.id === "noteSelector") {
+      setSelectorStatus("inactive");
+    }
+  };
+
+  const createNewNote = () => {
+    addNote({ method: "POST" });
+    getNewNotes();
+  };
 
   useEffect(() => {
     if (!activeNoteID && notes) {
@@ -18,22 +32,13 @@ const NotesSelector = ({ userNotes }) => {
 
   useEffect(() => {
     const selector = document.getElementById("noteSelector");
-    selector.addEventListener("click", handleSetActiveNoteID);
+    selector.addEventListener("click", SetActiveNoteID);
     setNotes(userNotes);
-    setTimeout(() => {
-      setNotesLoading(false);
-    }, 800);
+    setNotesLoading(false);
     return () => {
-      selector.removeEventListener("click", handleSetActiveNoteID);
+      selector.removeEventListener("click", SetActiveNoteID);
     };
   }, [userNotes, selectorStatus]);
-
-  const handleSetActiveNoteID = (e) => {
-    setActiveNoteID(e.target.id);
-    if (e.target.id === "noteSelector") {
-      setSelectorStatus("inactive");
-    }
-  };
 
   const handleSelectorStatus = () => {};
   return (
@@ -55,7 +60,7 @@ const NotesSelector = ({ userNotes }) => {
         <div className={styles.notesOptions}>
           <div className={styles.appTitle}>
             <p>Notes</p>
-            <FiPlusSquare className={styles.PlusIcon} />
+            <FiPlusSquare className={styles.PlusIcon} onClick={createNewNote} />
           </div>
           {notesLoading ? (
             <div className={styles.Message}>
@@ -69,6 +74,7 @@ const NotesSelector = ({ userNotes }) => {
                     key={data._id}
                     noteData={data}
                     isActive={data._id === activeNoteID}
+                    getNewNotes={() => getNewNotes()}
                   />
                 ))}
               </div>
@@ -76,7 +82,6 @@ const NotesSelector = ({ userNotes }) => {
           ) : (
             <div className={styles.Message}>
               <p>You don't have notes, create a new one</p>
-              <FiPlusSquare className={styles.PlusIcon} />
             </div>
           )}
         </div>

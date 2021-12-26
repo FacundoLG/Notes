@@ -5,7 +5,7 @@ import styles from "./textContainer.module.css";
 import Loading from "../../assets/svgs/Loading/Loading";
 import { BsFillCloudCheckFill } from "react-icons/bs";
 import useFetch from "../../hooks/useFetch";
-const TextContainer = () => {
+const TextContainer = ({ getNewNotes, loadingState }) => {
   const user = useContext(UserContext);
   const [tool, setTool] = useState({ name: "P", refresh: true });
   const [isUpdating, setIsUpdating] = useState(true);
@@ -13,6 +13,24 @@ const TextContainer = () => {
   const [textContent, setTextContent] = useState(null);
 
   const editNote = useFetch("http://localhost:3010/note");
+
+  const handleToUploadTextContent = (e) => {
+    setTextContent(e.target.innerHTML);
+  };
+  console.log(loadingState);
+
+  const handleEditNoteContent = () => {
+    console.log("Pushing edit");
+    editNote(
+      { method: "PATCH" },
+      {
+        _id: user.state.activeNote._id,
+        data: { content: document.getElementById("editable")?.innerHTML },
+      }
+    ).then(() => {
+      getNewNotes();
+    });
+  };
 
   useEffect(() => {
     switch (tool.name) {
@@ -51,12 +69,12 @@ const TextContainer = () => {
   }, [tool]);
   useEffect(() => {
     const editable = document.getElementById("editable");
-    editable.addEventListener("keyup", handleTextContentUpload);
-    editable.innerHTML = user.state.activeNote?.content;
+    editable.addEventListener("keyup", handleToUploadTextContent);
+    editable.innerHTML = user.state.activeNote?.content || "";
     setTextContent(user.state.activeNote?.content);
     setBaseContent(user.state.activeNote?.content);
     return () => {
-      editable.removeEventListener("keyup", handleTextContentUpload);
+      editable.removeEventListener("keyup", handleToUploadTextContent);
       if (
         user.state.activeNote &&
         user.state.activeNote.content != editable?.innerHTML
@@ -81,28 +99,43 @@ const TextContainer = () => {
     };
   }, [textContent, baseContent]);
 
-  const handleTextContentUpload = (e) => {
-    setTextContent(e.target.innerHTML);
-  };
-
-  const handleEditNoteContent = () => {
-    console.log("Pushing edit");
-    editNote(
-      { method: "PATCH" },
-      {
-        _id: user.state.activeNote._id,
-        data: { content: document.getElementById("editable")?.innerHTML },
-      }
-    ).then(console.log);
-  };
-
   return (
     <div className={styles.TextContainer}>
       <div
+        style={
+          !loadingState && user.state.activeNote ? {} : { display: "none" }
+        }
         id="editable"
         contentEditable="true"
         className={styles.EditableContent}
       ></div>
+      {loadingState ? (
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Loading size={55} />
+        </div>
+      ) : (
+        !user.state.activeNote && (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <p>Please select a note or create a new one</p>
+          </div>
+        )
+      )}
 
       <TextTools
         currentTool={(toolid) => {
@@ -115,7 +148,7 @@ const TextContainer = () => {
         <div className={styles.textStatus}>
           {isUpdating ? (
             <i>
-              <Loading size={20} />
+              <Loading size={18} />
             </i>
           ) : (
             <i>

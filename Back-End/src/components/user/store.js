@@ -6,7 +6,6 @@ dbConection();
 
 export const addNewUser = (userData) => {
   return new Promise((resolve, reject) => {
-    console.log(userData);
     const newUser = new User({
       username: userData.username,
       email: userData.email,

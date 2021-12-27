@@ -15,7 +15,6 @@ const router = express.Router();
 //Create new Note
 router.post("/", (req, res) => {
   const user_id = req.user._id;
-  console.log(user_id);
   createNewNote({ user_id, title: "New note" })
     .then((result) => {
       success(req, res, 200, result);

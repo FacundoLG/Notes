@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import UserContext from "../context/User/UserContext";
 
 const useFetch = (url) => {

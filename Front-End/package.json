@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack --mode=production",
-    "dev": "webpack serve --open  --port 3000 --mode=development "
+    "dev": "webpack serve --open  --port 3000 --mode=development",
+    "server": "webpack serve --mode=production"
   },
   "author": "Facundo Gimenez",
   "license": "MIT",

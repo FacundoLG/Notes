@@ -21,7 +21,7 @@ const Singin = () => {
     e.preventDefault();
     console.log({ username, password });
     const userData = { username, password };
-    fetch("http://localhost:3010/user/singin", {
+    fetch(`https://notesbackendbyfacundolg.herokuapp.com/user/singin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
-const URI = process.env.URI;
+const URI = process.env.URI || null;
 const dbConnection = async () => {
   if (!URI)
     return console.log(

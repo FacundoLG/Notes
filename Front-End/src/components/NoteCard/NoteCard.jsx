@@ -8,7 +8,9 @@ import Confirmation from "../Confirmation/Confirmation";
 const NoteCard = ({ noteData, isActive, getNewNotes }) => {
   const user = useContext(UserContext);
   const [noteTitle, setNoteTitle] = useState(noteData?.title || "Note title");
-  const editNote = useFetch("http://localhost:3010/note");
+  const editNote = useFetch(
+    `https://notesbackendbyfacundolg.herokuapp.com/note`
+  );
   const [confirmation, setConfirmation] = useState("inactive");
   const activeStatus = {
     background: "var(--primary-color)",
@@ -27,7 +29,7 @@ const NoteCard = ({ noteData, isActive, getNewNotes }) => {
   const onConfirmationResponse = (wantToDelete) => {
     setConfirmation("inactive");
     if (wantToDelete) {
-      editNote({ method: "DELETE" }, { _id: noteData._id });
+      editNote({ method: "DELETE" }, { _id: noteData._id }).then(console.log);
       user.setActiveUserNote(null);
       getNewNotes();
     }

@@ -3,16 +3,18 @@ import TextContainer from "../TextContainer/TextContainer";
 import styles from "./notesManager.module.css";
 import useFetch from "../../hooks/useFetch";
 import NotesSelector from "../NotesSelector/NotesSelector";
-import { BsList } from "react-icons/bs";
 import OptionsContext from "../../context/Options/OptionsContext";
 import UserContext from "../../context/User/UserContext";
+import { FiMenu } from "react-icons/fi";
 const NotesManager = () => {
   const user = useContext(UserContext);
   const options = useContext(OptionsContext);
   //API
   const [userNotes, setUserNotes] = useState();
   const [loading, setIsLoading] = useState();
-  let getNotes = useFetch("http://localhost:3010/note");
+  const [externalSelectorManager, setExternalSelectorManager] =
+    useState("inactive");
+  let getNotes = useFetch("https://notesbackendbyfacundolg.herokuapp.com/note");
 
   useEffect(() => {
     handleGetNotes();
@@ -44,6 +46,13 @@ const NotesManager = () => {
   };
   return (
     <>
+      <header className={styles.header}>
+        <FiMenu
+          onClick={() => {
+            setExternalSelectorManager();
+          }}
+        />
+      </header>
       <main className={styles.mainContainer}>
         <NotesSelector
           userNotes={userNotes}
@@ -51,6 +60,7 @@ const NotesManager = () => {
             setSelectorStatus("inactive");
           }}
           getNewNotes={() => handleGetNotes()}
+          externalSelectorStatus={externalSelectorManager}
         />
         <TextContainer
           getNewNotes={() => handleGetNotes()}

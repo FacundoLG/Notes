@@ -8,7 +8,7 @@ export const hashPassword = (password) => {
       .then((hash) => {
         resolve({ message: "Password successfully hashed", data: hash });
       })
-      .catch((err) => reject({ message: "Sing up error" }));
+      .catch(() => reject({ message: "Sing up error" }));
   });
 };
 

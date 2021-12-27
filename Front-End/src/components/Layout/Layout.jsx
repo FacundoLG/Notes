@@ -5,6 +5,7 @@ const Layout = ({ children }) => {
     <div
       style={{
         display: "flex",
+        flexDirection: "column",
         height: "100vh",
         maxHeight: "100vh",
       }}

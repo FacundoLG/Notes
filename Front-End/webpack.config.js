@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = (env, arg) => {
   const isDevelopment = arg.mode === "development";
+  console.log(isDevelopment);
   return {
     entry: ["@babel/polyfill", "./src/index.js"],
     output: {

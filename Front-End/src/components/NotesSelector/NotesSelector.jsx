@@ -4,14 +4,15 @@ import NoteCard from "../NoteCard/NoteCard";
 import Loading from "../../assets/svgs/Loading/Loading.jsx";
 import styles from "./notesSelector.module.css";
 import useFetch from "../../hooks/useFetch";
-import Confirmation from "../Confirmation/Confirmation";
 
-const NotesSelector = ({ userNotes, getNewNotes }) => {
+const NotesSelector = ({ userNotes, getNewNotes, externalSelectorStatus }) => {
   const [notes, setNotes] = useState(null);
   const [notesLoading, setNotesLoading] = useState(true);
   const [activeNoteID, setActiveNoteID] = useState();
-  const [selectorStatus, setSelectorStatus] = useState("inactive");
-  const addNote = useFetch("http://localhost:3010/note");
+  const [selectorStatus, setSelectorStatus] = useState("active");
+  const addNote = useFetch(
+    "https://notesbackendbyfacundolg.herokuapp.com/note"
+  );
   const SetActiveNoteID = (e) => {
     setActiveNoteID(e.target.id);
     if (e.target.id === "noteSelector") {
@@ -38,7 +39,11 @@ const NotesSelector = ({ userNotes, getNewNotes }) => {
     return () => {
       selector.removeEventListener("click", SetActiveNoteID);
     };
-  }, [userNotes, selectorStatus]);
+  }, [userNotes]);
+
+  useEffect(() => {
+    setSelectorStatus(selectorStatus == "active" ? "inactive" : "active");
+  }, [externalSelectorStatus]);
 
   const handleSelectorStatus = () => {};
   return (

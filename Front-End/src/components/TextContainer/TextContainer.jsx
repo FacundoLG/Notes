@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../../context/User/UserContext";
 import TextTools from "../TextTools/TextTools";
 import styles from "./textContainer.module.css";
@@ -11,8 +11,9 @@ const TextContainer = ({ getNewNotes, loadingState }) => {
   const [isUpdating, setIsUpdating] = useState(true);
   const [baseContent, setBaseContent] = useState(null);
   const [textContent, setTextContent] = useState(null);
-
-  const editNote = useFetch("http://localhost:3010/note");
+  const editNote = useFetch(
+    "https://notesbackendbyfacundolg.herokuapp.com/note"
+  );
 
   const handleToUploadTextContent = (e) => {
     setTextContent(e.target.innerHTML);
@@ -101,13 +102,15 @@ const TextContainer = ({ getNewNotes, loadingState }) => {
     <div className={styles.TextContainer}>
       <div
         style={
-          !loadingState && user.state.activeNote ? {} : { display: "none" }
+          (!loadingState && user.state.activeNote) || textContent
+            ? {}
+            : { display: "none" }
         }
         id="editable"
         contentEditable="true"
         className={styles.EditableContent}
       ></div>
-      {loadingState ? (
+      {loadingState && !user.state.activeNote?.content ? (
         <div
           style={{
             width: "100%",
@@ -120,7 +123,8 @@ const TextContainer = ({ getNewNotes, loadingState }) => {
           <Loading size={55} />
         </div>
       ) : (
-        !user.state.activeNote && (
+        !user.state.activeNote &&
+        !textContent && (
           <div
             style={{
               width: "100%",

@@ -1,7 +1,7 @@
 .header {
+  display: none;
   width: 100%;
   height: 50px;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 10px;
@@ -19,9 +19,8 @@
   width: 100vw;
   height: 100%;
 }
-
-@media (max-width: 580px) {
-  .notesSelector {
-    position: absolute;
+@media (max-width: 540px) {
+  .header {
+    display: flex;
   }
 }

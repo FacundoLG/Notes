@@ -64,7 +64,7 @@ const Singup = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     const userData = { username, email, password };
-    fetch("http://localhost:3010/user/singup", {
+    fetch("https://notesbackendbyfacundolg.herokuapp.com/user/singup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),

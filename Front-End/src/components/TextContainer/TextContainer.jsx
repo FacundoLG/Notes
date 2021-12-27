@@ -17,10 +17,8 @@ const TextContainer = ({ getNewNotes, loadingState }) => {
   const handleToUploadTextContent = (e) => {
     setTextContent(e.target.innerHTML);
   };
-  console.log(loadingState);
 
   const handleEditNoteContent = () => {
-    console.log("Pushing edit");
     editNote(
       { method: "PATCH" },
       {

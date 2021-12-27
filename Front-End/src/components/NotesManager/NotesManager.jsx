@@ -42,7 +42,6 @@ const NotesManager = () => {
         setIsLoading(false);
       });
   };
-  console.log(user?.state?.activeNote?.title);
   return (
     <>
       <main className={styles.mainContainer}>

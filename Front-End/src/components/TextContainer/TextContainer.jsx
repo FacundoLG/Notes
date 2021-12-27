@@ -124,7 +124,8 @@ const TextContainer = ({ getNewNotes, loadingState }) => {
         </div>
       ) : (
         !user.state.activeNote &&
-        !textContent && (
+        !textContent &&
+        !baseContent && (
           <div
             style={{
               width: "100%",

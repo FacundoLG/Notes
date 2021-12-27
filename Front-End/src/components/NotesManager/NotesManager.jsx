@@ -12,8 +12,7 @@ const NotesManager = () => {
   //API
   const [userNotes, setUserNotes] = useState();
   const [loading, setIsLoading] = useState();
-  const [externalSelectorManager, setExternalSelectorManager] =
-    useState("inactive");
+  const [selectorStatus, setSelectorStatus] = useState("active");
   let getNotes = useFetch("https://notesbackendbyfacundolg.herokuapp.com/note");
 
   useEffect(() => {
@@ -48,19 +47,21 @@ const NotesManager = () => {
     <>
       <header className={styles.header}>
         <FiMenu
+          className={styles.FiMenu}
           onClick={() => {
-            setExternalSelectorManager();
+            console.log(selectorStatus);
+            setSelectorStatus(
+              selectorStatus == "active" ? "inactive" : "active"
+            );
           }}
         />
       </header>
       <main className={styles.mainContainer}>
         <NotesSelector
           userNotes={userNotes}
-          setInactive={() => {
-            setSelectorStatus("inactive");
-          }}
           getNewNotes={() => handleGetNotes()}
-          externalSelectorStatus={externalSelectorManager}
+          sendSelectorStatus={(newStatus) => setSelectorStatus(newStatus)}
+          selectorStatus={selectorStatus}
         />
         <TextContainer
           getNewNotes={() => handleGetNotes()}

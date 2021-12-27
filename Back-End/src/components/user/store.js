@@ -1,5 +1,4 @@
 import User from "./model.js";
-import mongoose from "mongoose";
 import dbConection from "../../lib/dbConection";
 
 dbConection();
@@ -28,7 +27,7 @@ export const getUserByEmail = (email) => {
         if (!result) reject({ message: "User not found" });
         else resolve({ message: "User found", data: result });
       })
-      .catch((err) => {
+      .catch(() => {
         reject({ message: "User not found" });
       });
   });
@@ -41,7 +40,7 @@ export const getUserByUsername = (username) => {
         if (!result) reject({ message: "User not found" });
         else resolve({ message: "User found", data: result });
       })
-      .catch((err) => {
+      .catch(() => {
         reject({ message: "User not found" });
       });
   });

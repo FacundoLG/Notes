@@ -5,18 +5,22 @@ import Loading from "../../assets/svgs/Loading/Loading.jsx";
 import styles from "./notesSelector.module.css";
 import useFetch from "../../hooks/useFetch";
 
-const NotesSelector = ({ userNotes, getNewNotes, externalSelectorStatus }) => {
+const NotesSelector = ({
+  userNotes,
+  getNewNotes,
+  selectorStatus,
+  sendSelectorStatus,
+}) => {
   const [notes, setNotes] = useState(null);
   const [notesLoading, setNotesLoading] = useState(true);
   const [activeNoteID, setActiveNoteID] = useState();
-  const [selectorStatus, setSelectorStatus] = useState("active");
   const addNote = useFetch(
     "https://notesbackendbyfacundolg.herokuapp.com/note"
   );
-  const SetActiveNoteID = (e) => {
+  const GetID = (e) => {
     setActiveNoteID(e.target.id);
     if (e.target.id === "noteSelector") {
-      setSelectorStatus("inactive");
+      sendSelectorStatus("inactive");
     }
   };
 
@@ -33,17 +37,13 @@ const NotesSelector = ({ userNotes, getNewNotes, externalSelectorStatus }) => {
 
   useEffect(() => {
     const selector = document.getElementById("noteSelector");
-    selector.addEventListener("click", SetActiveNoteID);
+    selector.addEventListener("click", GetID);
     setNotes(userNotes);
     setNotesLoading(false);
     return () => {
-      selector.removeEventListener("click", SetActiveNoteID);
+      selector.removeEventListener("click", GetID);
     };
   }, [userNotes]);
-
-  useEffect(() => {
-    setSelectorStatus(selectorStatus == "active" ? "inactive" : "active");
-  }, [externalSelectorStatus]);
 
   const handleSelectorStatus = () => {};
   return (
@@ -51,7 +51,7 @@ const NotesSelector = ({ userNotes, getNewNotes, externalSelectorStatus }) => {
       <div className={styles.SelectorButton} onClick={handleSelectorStatus}>
         <FiMenu
           onClick={() =>
-            setSelectorStatus(
+            sendSelectorStatus(
               selectorStatus == "active" ? "inactive" : "active"
             )
           }

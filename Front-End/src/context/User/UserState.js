@@ -3,7 +3,7 @@ import UserReducer from "./UserReducer";
 import UserContext from "./UserContext";
 const UserState = ({ children }) => {
   const initialState = {
-    token: null,
+    token: localStorage.getItem("NoteTKN") || null,
     username: null,
     activeNote: null,
   };
@@ -11,6 +11,7 @@ const UserState = ({ children }) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
 
   const setUserInfo = (userData) => {
+    localStorage.setItem("NoteTKN", userData?.token);
     dispatch({
       type: "SET_USER",
       payload: userData,

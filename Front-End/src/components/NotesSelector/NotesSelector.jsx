@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { FiMenu, FiPlusSquare } from "react-icons/fi";
+import { useContext, useEffect, useState } from "react";
+import { FiLogOut, FiMenu, FiPlusSquare } from "react-icons/fi";
 import NoteCard from "../NoteCard/NoteCard";
 import Loading from "../../assets/svgs/Loading/Loading.jsx";
 import styles from "./notesSelector.module.css";
 import useFetch from "../../hooks/useFetch";
+import UserContext from "../../context/User/UserContext";
 
 const NotesSelector = ({
   userNotes,
@@ -11,6 +12,8 @@ const NotesSelector = ({
   selectorStatus,
   sendSelectorStatus,
 }) => {
+  const user = useContext(UserContext);
+
   const [notes, setNotes] = useState(null);
   const [notesLoading, setNotesLoading] = useState(true);
   const [activeNoteID, setActiveNoteID] = useState();
@@ -89,6 +92,15 @@ const NotesSelector = ({
               <p>You don't have notes, create a new one</p>
             </div>
           )}
+          <div
+            className={styles.LogOutContainer}
+            onClick={() => {
+              localStorage.setItem("NotesTKN", null);
+              user.setUserInfo(null);
+            }}
+          >
+            <FiLogOut />
+          </div>
         </div>
       </div>
     </>

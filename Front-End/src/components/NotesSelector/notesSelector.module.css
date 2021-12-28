@@ -81,6 +81,14 @@
 .Message p {
   text-align: center;
 }
+.LogOutContainer {
+  margin: auto 0 10px 10px;
+  font-size: 20px;
+  color: var(--contrast-color);
+}
+.LogOutContainer:hover {
+  cursor: pointer;
+}
 @media (max-width: 540px) {
   .SelectorButton {
     display: none;

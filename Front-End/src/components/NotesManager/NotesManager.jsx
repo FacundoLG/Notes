@@ -41,6 +41,11 @@ const NotesManager = () => {
       })
       .then(() => {
         setIsLoading(false);
+      })
+      .catch((data) => {
+        console.log(data);
+        localStorage.setItem("NotesTKN", null);
+        user.setUserInfo(null);
       });
   };
   return (

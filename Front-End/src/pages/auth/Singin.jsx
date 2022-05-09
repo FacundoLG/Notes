@@ -19,7 +19,6 @@ const Singin = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log({ username, password });
     const userData = { username, password };
     fetch(`https://notesbackendbyfacundolg.herokuapp.com/user/singin`, {
       method: "POST",

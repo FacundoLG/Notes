@@ -54,7 +54,6 @@ const NotesManager = () => {
         <FiMenu
           className={styles.FiMenu}
           onClick={() => {
-            console.log(selectorStatus);
             setSelectorStatus(
               selectorStatus == "active" ? "inactive" : "active"
             );
